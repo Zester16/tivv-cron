@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"stockpull/utils"
 )
 
 func GetAsiaIndex() string {
@@ -15,6 +16,8 @@ func GetAsiaIndex() string {
 	body, err := ioutil.ReadAll(resp.Body)
 
 	sb := string(body)
+
 	log.Printf(sb)
+	utils.ReadXML(sb)
 	return sb
 }
