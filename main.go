@@ -1,9 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"os"
@@ -27,7 +27,18 @@ func main() {
 
 	r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
 		sb := network.GetAsiaIndex()
-		io.WriteString(w, sb)
+		j, _ := json.Marshal(sb)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(j)
+		//io.Write(w, string(j))
+	})
+
+	r.HandleFunc("/wsj-asia", func(w http.ResponseWriter, r *http.Request) {
+		sb := network.GetAsiaIndex()
+		j, _ := json.Marshal(sb)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(j)
+		//io.Write(w, string(j))
 	})
 
 	port := os.Getenv("PORT")

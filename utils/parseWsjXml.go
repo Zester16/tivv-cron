@@ -19,20 +19,35 @@ type MidLevel struct {
 type Indexes struct {
 	XMLName   xml.Name `xml:"InstrumentByDialectResponse"`
 	RequestId string   `xml:"RequestId"`
+	Matches   Matches  `xml:"Matches>InstrumentMatch>CompositeTrading"`
 }
-type Result struct {
-	Value string
+type Matches struct {
+	XMLName       xml.Name `xml:"CompositeTrading"`
+	Points        string   `xml:"Last>Price>Value"`
+	ChangePercent string   `xml:"ChangePercent"`
 }
 
-func ReadXML(input string) {
+type StockIndex struct {
+	StockIndexName string
+	Points         string
+	Change         string
+}
+
+func ReadXML(input string) []StockIndex {
 	var v MidLevel
 	err := xml.Unmarshal([]byte(input), &v)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	//fmt.Println(v.Indexe)
+	var stockIndexArray []StockIndex
 	for i := 0; i < len(v.Indexes); i++ {
 		fmt.Println(v.Indexes[i].RequestId)
+		fmt.Println(v.Indexes[i].Matches.Points)
+		fmt.Println(v.Indexes[i].Matches.ChangePercent)
+		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, Change: v.Indexes[i].Matches.ChangePercent}
+		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
+	return stockIndexArray
 
 }
