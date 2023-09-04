@@ -1,19 +1,26 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"stockpull/network"
+	"stockpull/controller"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	//fmt.Printf("Hello fom golang")
+	errEnv := godotenv.Load(".env")
+	if errEnv != nil {
+		log.Fatal(errEnv)
+	}
+	test := os.Getenv("test")
+	fmt.Println(test)
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
@@ -25,22 +32,10 @@ func main() {
 
 	})
 
-	r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-		sb := network.GetAsiaIndex()
-		j, _ := json.Marshal(sb)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(j)
-		//io.Write(w, string(j))
-	})
+	r.HandleFunc("/test", controller.Test)
 
-	r.HandleFunc("/wsj-asia", func(w http.ResponseWriter, r *http.Request) {
-		sb := network.GetAsiaIndex()
-		j, _ := json.Marshal(sb)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(j)
-		//io.Write(w, string(j))
-	})
-
+	r.HandleFunc("/wsj-asia", controller.WsjAsia)
+	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
@@ -52,6 +47,7 @@ func main() {
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
 	// 	log.Fatal(err)
 	// }
+
 	err := http.ListenAndServe(":"+port, r)
 
 	if errors.Is(err, http.ErrServerClosed) {
