@@ -36,6 +36,7 @@ func main() {
 
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
+	r.HandleFunc("/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
