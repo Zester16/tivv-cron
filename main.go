@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -10,7 +11,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 )
+
+var ctx = context.Background()
 
 func main() {
 	//fmt.Printf("Hello fom golang")
@@ -21,6 +25,16 @@ func main() {
 	test := os.Getenv("test")
 	fmt.Println(test)
 
+	redisUrl := os.Getenv("redis")
+	fmt.Println(redisUrl)
+	opt, redisEr := redis.ParseURL(redisUrl)
+
+	if redisEr != nil {
+		panic(redisEr)
+	}
+	rdb := redis.NewClient(opt)
+
+	rdb.Set(ctx, "test", "test", 0).Err()
 	r := mux.NewRouter()
 
 	r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
