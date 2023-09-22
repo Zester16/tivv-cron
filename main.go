@@ -11,7 +11,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	"github.com/redis/go-redis/v9"
 )
 
 var ctx = context.Background()
@@ -22,35 +21,29 @@ func main() {
 	if errEnv != nil {
 		log.Fatal(errEnv)
 	}
-	test := os.Getenv("test")
+	test := os.Getenv("version")
 	fmt.Println(test)
 
-	redisUrl := os.Getenv("redis")
-	fmt.Println(redisUrl)
-	opt, redisEr := redis.ParseURL(redisUrl)
-
-	if redisEr != nil {
-		panic(redisEr)
-	}
-	rdb := redis.NewClient(opt)
-
-	rdb.Set(ctx, "test", "test", 0).Err()
+	//rdb := datasource.RedisConnect()
+	//rdb.RedisDBConnector.Set(ctx, "test2", "test2", 0).Err()
 	r := mux.NewRouter()
 
-	r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		title := vars["title"]
-		page := vars["page"]
+	// r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
+	// 	vars := mux.Vars(r)
+	// 	title := vars["title"]
+	// 	page := vars["page"]
 
-		fmt.Fprintf(w, "You've requested the book: %s on page %s\n", title, page)
+	// 	fmt.Fprintf(w, "You've requested the book: %s on page %s\n", title, page)
 
-	})
+	// })
 
 	r.HandleFunc("/test", controller.Test)
 
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	r.HandleFunc("/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
+	r.HandleFunc("/version", controller.Version)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
