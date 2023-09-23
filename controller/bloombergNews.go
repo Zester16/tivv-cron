@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-	"strings"
-	"time"
+	"stockpull/cron"
+	"stockpull/utils"
 )
 
 func GetBloombergTechNews(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +26,8 @@ func GetBloombergTechNews(w http.ResponseWriter, r *http.Request) {
 	response, err := ioutil.ReadAll(rep.Body)
 	if err != nil {
 		//log.Fatal(err)
-		//w.Write([]byte("Not our page"))
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Not our page"))
 	}
 	rep.Body.Close()
 	w.Write(response)
@@ -34,59 +35,23 @@ func GetBloombergTechNews(w http.ResponseWriter, r *http.Request) {
 }
 
 // gets bloomberg news
+// sets header and performs operation
+type ResponseUrl struct {
+	Url string `json:"url"`
+}
+
+// endpoint to get single day news directly
 func GetBQPrimeTodaysAllYouNeedToKnowNews(w http.ResponseWriter, r *http.Request) {
+	respObject := ResponseUrl{Url: utils.GetBQPrimeUrl()}
 
 	//fmt.Print(fullString)
-	w.Write([]byte(GetBQPrimeUrl()))
+	//w.Write([]byte(string({"url":GetBQPrimeUrl()))})
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(respObject)
 }
 
-func GetBQPrimeUrl() string {
-	baseString := `https://www.bqprime.com/business/stock-market-today-all-you-need-to-know-going-into-trade-on-`
-	tm := time.Now()
-	month := tm.Month().String()
-	date := tm.Day()
-	yr := YearToEdgePasser(tm.Year())
-	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date)
-	fullStringUrl := fullString + "-" + strconv.Itoa(yr)
-	fmt.Printf(fullStringUrl)
-	req, _ := http.Get(fullStringUrl)
+func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
+	cron.SetBqPrimeNEwsLetterArray()
+	w.Write([]byte("Done"))
 
-	if req.StatusCode == 200 {
-		fmt.Printf("in full string url")
-		return fullStringUrl
-	}
-
-	return fullString
-
-}
-func getMonthAsPerCurrentMonth(month string) string {
-
-	var mtn string
-	if month == "January" {
-		mtn = "jan"
-	} else if month == "February" {
-		mtn = "feb"
-	} else if month == "August" {
-		mtn = "aug"
-	} else if month == "September" {
-		mtn = "sept"
-	} else if month == "October" {
-		mtn = "oct"
-	} else if month == "November" {
-		mtn = "nov"
-	} else if month == "December" {
-		mtn = "dec"
-	} else {
-		mtn = strings.ToLower(month)
-	}
-
-	return mtn
-}
-
-func YearToEdgePasser(year int) int {
-	if year == 2023 {
-		return 2
-	} else {
-		return 0
-	}
 }

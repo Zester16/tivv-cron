@@ -42,6 +42,7 @@ func main() {
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	r.HandleFunc("/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
+	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/version", controller.Version)
 
 	port := os.Getenv("PORT")
