@@ -1,19 +1,18 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"stockpull/controller"
+	"stockpull/cronjobs"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"github.com/robfig/cron/v3"
 )
-
-var ctx = context.Background()
 
 func main() {
 	//fmt.Printf("Hello fom golang")
@@ -21,22 +20,7 @@ func main() {
 	if errEnv != nil {
 		log.Fatal(errEnv)
 	}
-	test := os.Getenv("version")
-	fmt.Println(test)
-
-	//rdb := datasource.RedisConnect()
-	//rdb.RedisDBConnector.Set(ctx, "test2", "test2", 0).Err()
 	r := mux.NewRouter()
-
-	// r.HandleFunc("/books/{title}/page/{page}", func(w http.ResponseWriter, r *http.Request) {
-	// 	vars := mux.Vars(r)
-	// 	title := vars["title"]
-	// 	page := vars["page"]
-
-	// 	fmt.Fprintf(w, "You've requested the book: %s on page %s\n", title, page)
-
-	// })
-
 	r.HandleFunc("/test", controller.Test)
 
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
@@ -53,10 +37,6 @@ func main() {
 
 	log.Printf("Listening on port %s", port)
 
-	// if err := http.ListenAndServe(":"+port, nil); err != nil {
-	// 	log.Fatal(err)
-	// }
-
 	err := http.ListenAndServe(":"+port, r)
 
 	if errors.Is(err, http.ErrServerClosed) {
@@ -66,5 +46,12 @@ func main() {
 		os.Exit(1)
 
 	}
+
+	cn := cron.New()
+	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+	// if err := http.ListenAndServe(":"+port, nil); err != nil {
+	// 	log.Fatal(err)
+	// }
+	cn.Start()
 
 }

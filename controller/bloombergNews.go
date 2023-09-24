@@ -1,13 +1,17 @@
 package controller
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"stockpull/cron"
+	"stockpull/cronjobs"
+	"stockpull/datasource"
 	"stockpull/utils"
 )
+
+var ctx = context.Background()
 
 func GetBloombergTechNews(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
@@ -51,7 +55,13 @@ func GetBQPrimeTodaysAllYouNeedToKnowNews(w http.ResponseWriter, r *http.Request
 }
 
 func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
-	cron.SetBqPrimeNEwsLetterArray()
-	w.Write([]byte("Done"))
+	//cron.SetBqPrimeNEwsLetterArray()
+	rdb := datasource.RedisConnect()
+	list, err := rdb.RedisDBConnector.Get(ctx, cronjobs.BqPrimeName).Result()
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(list))
 
 }

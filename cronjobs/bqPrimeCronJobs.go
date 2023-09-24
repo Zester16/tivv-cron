@@ -1,4 +1,4 @@
-package cron
+package cronjobs
 
 import (
 	"context"
@@ -19,11 +19,13 @@ type NewsObject struct {
 	NewsUrl string `json:"newsUrl"`
 }
 
+var BqPrimeName = "bqprimeArray"
+
 func SetBqPrimeNEwsLetterArray() {
-	bqPrimeName := "bqprimeArray"
+
 	rdb := datasource.RedisConnect()
 
-	bqArrayString, err := rdb.RedisDBConnector.Get(ctx, bqPrimeName).Result()
+	bqArrayString, err := rdb.RedisDBConnector.Get(ctx, BqPrimeName).Result()
 
 	url := utils.GetBQPrimeUrl()
 
@@ -52,6 +54,6 @@ func SetBqPrimeNEwsLetterArray() {
 
 	}
 	j, _ := json.Marshal(bqArray)
-	rdb.RedisDBConnector.Set(ctx, bqPrimeName, j, 0).Err()
+	rdb.RedisDBConnector.Set(ctx, BqPrimeName, j, 0).Err()
 
 }
