@@ -2,7 +2,6 @@ package datasource
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/redis/go-redis/v9"
@@ -16,7 +15,7 @@ type RedisDatabase struct {
 
 func RedisConnect() *RedisDatabase {
 	redisUrl := os.Getenv("redis")
-	fmt.Println(redisUrl)
+	//fmt.Println(redisUrl)
 	opt, redisEr := redis.ParseURL(redisUrl)
 
 	if redisEr != nil {

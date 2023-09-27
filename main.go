@@ -29,6 +29,15 @@ func main() {
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/version", controller.Version)
 
+	cn := cron.New()
+	//cron job to run every 2 min "*/2 * * * *"
+	//cron job to run at 2H 5Min "5 2 * * *"
+	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+
+	// if err := http.ListenAndServe(":"+port, nil); err != nil {
+	// 	log.Fatal(err)
+	// }
+	cn.Start()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
@@ -46,12 +55,11 @@ func main() {
 		os.Exit(1)
 
 	}
-
-	cn := cron.New()
-	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
-	// if err := http.ListenAndServe(":"+port, nil); err != nil {
-	// 	log.Fatal(err)
-	// }
-	cn.Start()
+	//stubbing
+	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+	// cn.AddFunc("*/2 * * * *", func() {
+	// 	cronjobs.SetBqPrimeNEwsLetterArray()
+	// 	fmt.Println("Cron running")
+	// })
 
 }

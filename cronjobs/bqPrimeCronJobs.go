@@ -35,7 +35,7 @@ func SetBqPrimeNEwsLetterArray() {
 	yr := strconv.Itoa(tm.Year())
 	todaysDate := day + "-" + month + "-" + yr
 
-	var bqArray = []NewsObject{{Date: "2" + todaysDate, NewsUrl: url}}
+	var bqArray = []NewsObject{{Date: todaysDate, NewsUrl: url}}
 
 	if err != redis.Nil {
 		newsObject := []NewsObject{}
