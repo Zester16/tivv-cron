@@ -18,7 +18,7 @@ type MidLevel struct {
 
 type Indexes struct {
 	XMLName   xml.Name `xml:"InstrumentByDialectResponse"`
-	RequestId string   `xml:"RequestId"`
+	RequestId string   `xml:"Matches>InstrumentMatch>Instrument>CommonName"`
 	Matches   Matches  `xml:"Matches>InstrumentMatch>CompositeTrading"`
 }
 type Matches struct {
