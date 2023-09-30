@@ -20,3 +20,10 @@ func WsjAsia(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(j)
 }
+
+func WsjEurope(w http.ResponseWriter, r *http.Request) {
+	sb := network.GetEuropeIndex()
+	j, _ := json.Marshal(sb)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(j)
+}

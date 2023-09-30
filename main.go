@@ -24,6 +24,7 @@ func main() {
 	r.HandleFunc("/test", controller.Test)
 
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
+	r.HandleFunc("/wsj-europe", controller.WsjEurope)
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	r.HandleFunc("/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
@@ -33,7 +34,7 @@ func main() {
 	//cron job to run every 2 min "*/2 * * * *"
 	//cron job to run at 2H 5Min "5 2 * * *"
 	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
-	cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+	//cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
 	// 	log.Fatal(err)
 	// }

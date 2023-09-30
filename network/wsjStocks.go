@@ -1,6 +1,7 @@
 package network
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -20,5 +21,17 @@ func GetAsiaIndex() []utils.StockIndex {
 	log.Printf(sb)
 	var stockTickerArray = utils.ReadXML(sb)
 
+	return stockTickerArray
+}
+
+func GetEuropeIndex() []utils.StockIndex {
+	resp, err := http.Get("https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=charting&id=INDEX%2FFR%2F%2FPX1%2CSX5P%2CINDEX%2FUK%2F%2FMCX&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	sb := string(body)
+	var stockTickerArray = utils.ReadXML(sb)
 	return stockTickerArray
 }
