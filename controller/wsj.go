@@ -27,3 +27,10 @@ func WsjEurope(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(j)
 }
+
+func WSJAllIndex(w http.ResponseWriter, r *http.Request) {
+	sb := network.GetAllIndex()
+	j, _ := json.Marshal(sb)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(j)
+}
