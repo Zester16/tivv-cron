@@ -32,5 +32,6 @@ func WSJAllIndex(w http.ResponseWriter, r *http.Request) {
 	sb := network.GetAllIndex()
 	j, _ := json.Marshal(sb)
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(j)
 }
