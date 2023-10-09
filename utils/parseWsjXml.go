@@ -28,9 +28,9 @@ type Matches struct {
 }
 
 type StockIndex struct {
-	StockIndexName string
-	Points         string
-	Change         string
+	StockIndexName string `json:"stockIndexName"`
+	Points         string `json:"points"`
+	Change         string `json:"change"`
 }
 
 func ReadXML(input string) []StockIndex {
