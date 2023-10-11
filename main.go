@@ -25,6 +25,7 @@ func main() {
 
 	r.HandleFunc("/wsj-all-index", controller.WSJAllIndex)
 	r.HandleFunc("/wsj-bonds", controller.WSJBonds)
+	r.HandleFunc("/wsj-usa", controller.WSJUsaIndex)
 	r.HandleFunc("/wsj-asia", controller.WsjAsia)
 	r.HandleFunc("/wsj-europe", controller.WsjEurope)
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)

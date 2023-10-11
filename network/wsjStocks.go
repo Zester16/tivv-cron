@@ -69,3 +69,18 @@ func GetWSJBonds() []utils.StockIndex {
 
 	return list
 }
+func GetWSJUSAIndex() []utils.StockIndex {
+	url := "https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=djid&id=343338%2C497001%2C343345%2C343303%2C433-25014677&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90"
+
+	response, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+
+	sb := string(body)
+	list := utils.ReadXML(sb)
+
+	return list
+}

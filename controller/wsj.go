@@ -43,3 +43,12 @@ func WSJBonds(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(j)
 }
+
+func WSJUsaIndex(w http.ResponseWriter, r *http.Request) {
+	sb := network.GetWSJUSAIndex()
+	j, _ := json.Marshal(sb)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(j)
+}
