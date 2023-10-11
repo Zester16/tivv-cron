@@ -51,3 +51,21 @@ func GetAllIndex() []utils.StockIndex {
 	var allIdex = append(europeIndexArray, asiaIndexAray...)
 	return allIdex
 }
+
+func GetWSJBonds() []utils.StockIndex {
+	url := "https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=charting&id=Bond%2FBX%2FXTUP%2FTMUBMUSD10Y%2CINDEX%2FUS%2FCBSX%2FVIX%2CGC00%2CFUTURE%2FUS%2F%2FCrude+Oil+-+Electronic%2CBUXX%2CBKX%2CSPGSCI&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90"
+
+	response, err := http.Get(url)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+
+	sb := string(body)
+	fmt.Println(sb)
+	list := utils.ReadXML(sb)
+
+	return list
+}
