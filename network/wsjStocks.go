@@ -47,8 +47,10 @@ func GetEuropeIndex() []utils.StockIndex {
 func GetAllIndex() []utils.StockIndex {
 	europeIndexArray := GetEuropeIndex()
 	asiaIndexAray := GetAsiaIndex()
+	usaIndexArray := GetWSJUSAIndex()
 
 	var allIdex = append(europeIndexArray, asiaIndexAray...)
+	allIdex = append(allIdex, usaIndexArray...)
 	return allIdex
 }
 
