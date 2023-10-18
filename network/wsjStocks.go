@@ -18,7 +18,6 @@ func GetAsiaIndex() []utils.StockIndex {
 
 	sb := string(body)
 
-	log.Printf(sb)
 	var stockTickerArray = utils.ReadXML(sb)
 
 	return stockTickerArray
