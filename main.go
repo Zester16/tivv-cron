@@ -31,7 +31,7 @@ func main() {
 	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	r.HandleFunc("/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
-	r.HandleFunc("/currency", controller.GetCurrencyValue)
+	r.HandleFunc("/live-currency", controller.GetCurrencyValue)
 	r.HandleFunc("/version", controller.Version)
 
 	cn := cron.New()
