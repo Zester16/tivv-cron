@@ -65,3 +65,10 @@ func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(list))
 
 }
+
+func GetLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
+	//	rdb := datasource.RedisConnect()
+	cronjobs.SetMintTopOfMorningNewsletter()
+
+	w.Write([]byte("Its done"))
+}
