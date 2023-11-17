@@ -21,17 +21,19 @@ func SetMintTopOfMorningNewsletter() {
 	newsBody := network.GetLiveMintNewsletter()
 
 	newNewsArray := []NewsLetterStruct{{Date: utils.GetTodaysDateToString(), NewsBody: newsBody}}
-	oldNewsArray := []NewsLetterStruct{}
 
 	if redisErr != redis.Nil {
-		if len(newsletterString) > 0 {
-			err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
-
-			if err != nil {
-				fmt.Println(err)
-			}
+		oldNewsArray := []NewsLetterStruct{}
+		err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
+		if err != nil {
+			fmt.Println(err)
 		}
-		newNewsArray = append(newNewsArray, oldNewsArray...)
+
+		if oldNewsArray[0].Date != newNewsArray[0].Date {
+			newNewsArray = append(newNewsArray, oldNewsArray...)
+		} else {
+			newNewsArray = oldNewsArray
+		}
 	}
 
 	j, _ := json.Marshal(newNewsArray)
