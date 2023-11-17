@@ -23,15 +23,14 @@ func SetMintTopOfMorningNewsletter() {
 	newNewsArray := []NewsLetterStruct{{Date: utils.GetTodaysDateToString(), NewsBody: newsBody}}
 	oldNewsArray := []NewsLetterStruct{}
 
-	if len(newsletterString) > 0 {
-		err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
-
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-
 	if redisErr != redis.Nil {
+		if len(newsletterString) > 0 {
+			err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
 		newNewsArray = append(newNewsArray, oldNewsArray...)
 	}
 
