@@ -14,3 +14,13 @@ func GetTodaysDateToString() string {
 
 	return todaysDate
 }
+
+func CheckTodayIsWeekend() bool {
+	dy := time.Now().Weekday()
+
+	//fmt.Println(dy)
+	if dy == time.Saturday || dy == time.Sunday {
+		return true
+	}
+	return false
+}

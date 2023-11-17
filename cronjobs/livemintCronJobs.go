@@ -28,8 +28,9 @@ func SetMintTopOfMorningNewsletter() {
 		if err != nil {
 			fmt.Println(err)
 		}
-
-		if oldNewsArray[0].Date != newNewsArray[0].Date {
+		isWeekend := utils.CheckTodayIsWeekend()
+		//fmt.Println(isWeekend)
+		if oldNewsArray[0].Date != newNewsArray[0].Date && !isWeekend {
 			newNewsArray = append(newNewsArray, oldNewsArray...)
 		} else {
 			newNewsArray = oldNewsArray
