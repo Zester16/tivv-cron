@@ -41,7 +41,9 @@ func SetBqPrimeNEwsLetterArray() {
 		newsObject := []NewsObject{}
 		errJsn := json.Unmarshal([]byte(bqArrayString), &newsObject)
 
-		if bqArray[0].Date != newsObject[0].Date {
+		isWeekend := utils.CheckTodayIsWeekend()
+
+		if bqArray[0].Date != newsObject[0].Date && isWeekend {
 			bqArray = append(bqArray, newsObject...)
 		} else {
 			bqArray = newsObject
