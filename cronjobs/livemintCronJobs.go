@@ -13,7 +13,7 @@ import (
 var RedisKeyMintNewLetter = "livemint-totm-nm"
 
 func SetMintTopOfMorningNewsletter() {
-
+	fmt.Println("MinttopOfTheMorningCronJob")
 	rdb := datasource.RedisConnect()
 
 	newsletterString, redisErr := rdb.RedisDBConnector.Get(ctx, RedisKeyMintNewLetter).Result()
@@ -30,7 +30,7 @@ func SetMintTopOfMorningNewsletter() {
 		}
 		isWeekend := utils.CheckTodayIsWeekend()
 		//fmt.Println(isWeekend)
-		if oldNewsArray[0].Date != newNewsArray[0].Date && !isWeekend {
+		if (oldNewsArray[0].Date != newNewsArray[0].Date) && !isWeekend {
 			newNewsArray = append(newNewsArray, oldNewsArray...)
 		} else {
 			newNewsArray = oldNewsArray
