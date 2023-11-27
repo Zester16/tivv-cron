@@ -16,8 +16,13 @@ func GetLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(rdbError.Error()))
 	}
 
-	cronjobs.SetMintTopOfMorningNewsletter()
+	//cronjobs.SetMintTopOfMorningNewsletter()
 
 	w.Header().Add("Content-Type", "application/json")
 	w.Write([]byte(lmNewsArray))
 }
+
+// func AddLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
+// 	cronjobs.SetMintTopOfMorningNewsletter()
+// 	w.Write([]byte("its all ok"))
+// }

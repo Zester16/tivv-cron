@@ -19,6 +19,7 @@ func SetMintTopOfMorningNewsletter() {
 	newsletterString, redisErr := rdb.RedisDBConnector.Get(ctx, RedisKeyMintNewLetter).Result()
 
 	newsBody := network.GetLiveMintNewsletter()
+	//fmt.Println(newsBody)
 
 	newNewsArray := []NewsLetterStruct{{Date: utils.GetTodaysDateToString(), NewsBody: newsBody}}
 
@@ -29,14 +30,19 @@ func SetMintTopOfMorningNewsletter() {
 			fmt.Println(err)
 		}
 		isWeekend := utils.CheckTodayIsWeekend()
-		//fmt.Println(isWeekend)
+		fmt.Println(isWeekend)
 		if (oldNewsArray[0].Date != newNewsArray[0].Date) && !isWeekend {
 			newNewsArray = append(newNewsArray, oldNewsArray...)
+			fmt.Println("LivemintNewsCronJob", "Its weekday")
 		} else {
 			newNewsArray = oldNewsArray
+			fmt.Println("LivemintNewsCronJob", "Its weekend")
 		}
 	}
 
-	j, _ := json.Marshal(newNewsArray)
+	j, err := json.Marshal(newNewsArray)
+	if err != nil {
+		fmt.Println("LivemintNewsMarshal Error: ", err)
+	}
 	rdb.RedisDBConnector.Set(ctx, RedisKeyMintNewLetter, j, 0).Err()
 }
