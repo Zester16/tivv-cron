@@ -29,6 +29,8 @@ func SetBqPrimeNEwsLetterArray() {
 
 	url := utils.GetBQPrimeUrl()
 
+	fmt.Println("bqPrimeCron: ", url)
+
 	tm := time.Now()
 	month := tm.Month().String()
 	day := strconv.Itoa(tm.Day())
@@ -43,8 +45,9 @@ func SetBqPrimeNEwsLetterArray() {
 
 		isWeekend := utils.CheckTodayIsWeekend()
 
-		if bqArray[0].Date != newsObject[0].Date && isWeekend {
+		if bqArray[0].Date != newsObject[0].Date && !isWeekend {
 			bqArray = append(bqArray, newsObject...)
+
 		} else {
 			bqArray = newsObject
 		}

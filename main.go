@@ -39,6 +39,7 @@ func main() {
 	//cron job to run every 2 min "*/2 * * * *"
 	//cron job to run at 2H 5Min "5 2 * * *"
 	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("5 2 * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	//cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
