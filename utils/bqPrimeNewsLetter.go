@@ -17,7 +17,10 @@ func GetBQPrimeUrl() string {
 	yr := YearToEdgePasser(tm.Year())
 	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date)
 	fullStringUrl := fullString + "-" + strconv.Itoa(yr)
-	fmt.Printf(fullStringUrl)
+
+	fmt.Println("Utils:GetBQPrime:fullstring: ", fullString)
+	fmt.Println("Utils:GetBQPrime:fullstringURL: ", fullStringUrl)
+
 	req, _ := http.Get(fullStringUrl)
 
 	if req.StatusCode == 200 {
@@ -53,7 +56,7 @@ func getMonthAsPerCurrentMonth(month string) string {
 }
 
 func YearToEdgePasser(year int) int {
-	if year == 2023 {
+	if year == 2024 {
 		return 2
 	} else {
 		return 0
