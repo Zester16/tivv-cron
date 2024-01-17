@@ -44,7 +44,7 @@ type ResponseUrl struct {
 	Url string `json:"url"`
 }
 
-// endpoint to get single day news directly
+// endpoint to get single day news letter directly
 func GetBQPrimeTodaysAllYouNeedToKnowNews(w http.ResponseWriter, r *http.Request) {
 	respObject := ResponseUrl{Url: utils.GetBQPrimeUrl()}
 
@@ -54,6 +54,7 @@ func GetBQPrimeTodaysAllYouNeedToKnowNews(w http.ResponseWriter, r *http.Request
 	json.NewEncoder(w).Encode(respObject)
 }
 
+// endpoint to get array of newsletters of bqprime morning newsletter
 func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 	//cron.SetBqPrimeNEwsLetterArray()
 	rdb := datasource.RedisConnect()
