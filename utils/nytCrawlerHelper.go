@@ -19,7 +19,7 @@ func NytArrayPopulator(news []NewsLetterNytStruct) []NewsLetterNytStruct {
 
 func NytNewsArray(key string) string {
 
-	urlArrays := map[string]string{"dealbook": os.Getenv("nyt_dealbook")}
+	urlArrays := map[string]string{"nyt_dealbook": os.Getenv("nyt_dealbook")}
 
 	return urlArrays[key]
 

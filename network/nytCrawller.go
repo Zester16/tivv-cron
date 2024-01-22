@@ -1,6 +1,7 @@
 package network
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -9,19 +10,31 @@ import (
 	"stockpull/utils"
 )
 
+// struct for sending proper header
+type NYTNewsBodyStruct struct {
+	NewsUrl string `json:"news_url"`
+}
+
 // calls news letter
 func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytStruct, error) {
 
-	r, err := http.NewRequest("POST", os.Getenv("nyt_cron"), nil)
+	url := utils.NytNewsArray(key)
+
+	newsUrl := NYTNewsBodyStruct{NewsUrl: url}
+
+	newsUrlJSON, _ := json.Marshal(newsUrl)
+
+	fmt.Println("", bytes.NewBuffer(newsUrlJSON))
+
+	r, err := http.NewRequest("POST", os.Getenv("nyt_cron"), bytes.NewBuffer(newsUrlJSON))
 
 	if err != nil {
 		fmt.Println("network-post-PostCrawlGetNYTimeArrayEveningBriefing", err)
 		return []utils.NewsLetterNytStruct{}, err
 	}
 
-	url := utils.NytNewsArray(key)
 	r.Header.Set("news_url", url)
-
+	r.Header.Set("Content-type", "application/json")
 	client := &http.Client{}
 	res, err := client.Do(r)
 
