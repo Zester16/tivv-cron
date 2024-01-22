@@ -12,18 +12,25 @@ import (
 // This is for all functions related to NYTimes
 func GetNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 
-	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing()
+	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_dealbook")
 
-	if err != nil {
+	if err != nil || len(res) == 0 {
 		fmt.Println("GETNYTTimesArrayDealBook", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+		return
 
 	}
 	str, err := json.Marshal(res)
 
 	if err != nil {
 		fmt.Println("GETNYTTimesArrayDealBook", err)
-
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+		return
 	}
+
+	w.Header().Add("Content-Type", "application/json")
 	w.Write([]byte(str))
 }
 

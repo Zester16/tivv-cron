@@ -10,7 +10,7 @@ import (
 )
 
 // calls news letter
-func PostCrawlGetNYTimeArrayEveningBriefing() ([]utils.NewsLetterNytStruct, error) {
+func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytStruct, error) {
 
 	r, err := http.NewRequest("POST", os.Getenv("nyt_cron"), nil)
 
@@ -19,7 +19,8 @@ func PostCrawlGetNYTimeArrayEveningBriefing() ([]utils.NewsLetterNytStruct, erro
 		return []utils.NewsLetterNytStruct{}, err
 	}
 
-	r.Header.Set("news_url", "https://www.nytimes.com/column/dealbook-newsletter")
+	url := utils.NytNewsArray(key)
+	r.Header.Set("news_url", url)
 
 	client := &http.Client{}
 	res, err := client.Do(r)
@@ -39,8 +40,11 @@ func PostCrawlGetNYTimeArrayEveningBriefing() ([]utils.NewsLetterNytStruct, erro
 
 	sb := string(body)
 	fmt.Println(sb)
+
 	json.Unmarshal([]byte(sb), &newsLetterStruct)
+
 	fmt.Println("newsletterstruct", newsLetterStruct)
+
 	return newsLetterStruct, nil
 
 }
