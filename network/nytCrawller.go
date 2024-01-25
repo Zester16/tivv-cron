@@ -29,7 +29,7 @@ func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytSt
 	r, err := http.NewRequest("POST", os.Getenv("nyt_cron"), bytes.NewBuffer(newsUrlJSON))
 
 	if err != nil {
-		fmt.Println("network-post-PostCrawlGetNYTimeArrayEveningBriefing", err)
+		fmt.Println("network-post-PostCrawlGetNYTimeArray", err)
 		return []utils.NewsLetterNytStruct{}, err
 	}
 
@@ -39,13 +39,13 @@ func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytSt
 	res, err := client.Do(r)
 
 	if err != nil {
-		fmt.Println("network-post-PostCrawlGetNYTimeArrayEveningBriefing", err)
+		fmt.Println("network-post-PostCrawlGetNYTimeArray", err)
 		return []utils.NewsLetterNytStruct{}, err
 	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println("network-post-PostCrawlGetNYTimeArrayEveningBriefing", err)
+		fmt.Println("network-post-PostCrawlGetNYTimeArray", err)
 		return []utils.NewsLetterNytStruct{}, err
 	}
 
