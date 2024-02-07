@@ -36,7 +36,24 @@ func GetNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 
 // This function returns array of newsletter corresponding to AustraliaNewzealand
 func GetNYTimesArrayANZ(w http.ResponseWriter, r *http.Request) {
+	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_morning_aus")
 
+	if err != nil || len(res) == 0 {
+		fmt.Println("controller/GetNYTimesArrayANZ/Error: ", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+
+	}
+
+	str, err := json.Marshal(res)
+
+	if err != nil {
+		fmt.Println("controller/GetNYTimesArrayANZ/Error: ", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(str))
 }
 
 // This function returns array of newletter APAC
@@ -59,4 +76,4 @@ func GetNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//********FUNCTION WILL GIVE LIVE DATA**********************//
+//********FUNCTION WILL GIVE Cached DATA**********************//
