@@ -17,7 +17,11 @@ func GetNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 	if err != nil || len(res) == 0 {
 		fmt.Println("controller/GETNYTTimesArrayDealBook/Error: ", err)
 		w.WriteHeader(400)
-		w.Write([]byte(err.Error()))
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Some Error in downstream"))
+		}
 		return
 
 	}
@@ -41,7 +45,11 @@ func GetNYTimesArrayANZ(w http.ResponseWriter, r *http.Request) {
 	if err != nil || len(res) == 0 {
 		fmt.Println("controller/GetNYTimesArrayANZ/Error: ", err)
 		w.WriteHeader(400)
-		w.Write([]byte(err.Error()))
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Some Error in downstream"))
+		}
 
 	}
 
@@ -64,7 +72,11 @@ func GetNYTimesArrayAPAC(w http.ResponseWriter, r *http.Request) {
 	if err != nil || len(res) == 0 {
 		fmt.Println("controller/GetNYTimesArrayAPAC/Error:", err)
 		w.WriteHeader(400)
-		w.Write([]byte(err.Error()))
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Some Error in downstream"))
+		}
 	}
 	str, err := json.Marshal(res)
 
@@ -87,7 +99,12 @@ func GetNYTimesArrayEurope(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println("controller/GetNYTimesArrayEurope/Error: ", err)
 		w.WriteHeader(400)
-		w.Write([]byte(err.Error()))
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Some Error in downstream"))
+		}
+
 	}
 	str, err := json.Marshal(res)
 
