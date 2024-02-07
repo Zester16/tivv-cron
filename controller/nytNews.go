@@ -15,7 +15,7 @@ func GetNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_dealbook")
 
 	if err != nil || len(res) == 0 {
-		fmt.Println("GETNYTTimesArrayDealBook", err)
+		fmt.Println("controller/GETNYTTimesArrayDealBook/Error: ", err)
 		w.WriteHeader(400)
 		w.Write([]byte(err.Error()))
 		return
@@ -24,7 +24,7 @@ func GetNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 	str, err := json.Marshal(res)
 
 	if err != nil {
-		fmt.Println("GETNYTTimesArrayDealBook", err)
+		fmt.Println("controller/GETNYTTimesArrayDealBook/Error: ", err)
 		w.WriteHeader(400)
 		w.Write([]byte(err.Error()))
 		return
@@ -59,6 +59,23 @@ func GetNYTimesArrayANZ(w http.ResponseWriter, r *http.Request) {
 // This function returns array of newletter APAC
 func GetNYTimesArrayAPAC(w http.ResponseWriter, r *http.Request) {
 
+	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_morning_apac")
+
+	if err != nil || len(res) == 0 {
+		fmt.Println("controller/GetNYTimesArrayAPAC/Error:", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+	str, err := json.Marshal(res)
+
+	if err != nil {
+
+		fmt.Println("controller/GetNYTimesArrayAPAC/Error: ", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(str))
 }
 
 // This function returns array of newsletter from europe
