@@ -120,6 +120,29 @@ func GetNYTimesArrayEurope(w http.ResponseWriter, r *http.Request) {
 // This function returns array of newsletter from NYT for USA
 func GetNYTimeArrayUsa(w http.ResponseWriter, r *http.Request) {
 
+	req, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_morning_us")
+
+	if err != nil || len(req) == 0 {
+		fmt.Println("controller/GetNYTimesArrayEurope/Error: ", err)
+		w.WriteHeader(400)
+		w.Header().Add("Content-Type", "application/json")
+
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Some error happend in downstream"))
+		}
+	}
+
+	str, err := json.Marshal(req)
+
+	if err != nil {
+		fmt.Println("controller/GetNYTimesArrayEurope/Error: ", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(str))
 }
 
 // This function returns array of evening news from NYT USA
