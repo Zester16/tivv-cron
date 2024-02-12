@@ -38,6 +38,7 @@ func main() {
 	r.HandleFunc("/live/nyt-apac", controller.GetNYTimesArrayAPAC)
 	r.HandleFunc("/live/nyt-europe", controller.GetNYTimesArrayEurope)
 	r.HandleFunc("/live/nyt-us", controller.GetNYTimeArrayUsa)
+	r.HandleFunc("/live/nyt-us-evening-brief", controller.GetNYTimeArrayEveningBriefing)
 	r.HandleFunc("/version", controller.Version)
 
 	cn := cron.New()

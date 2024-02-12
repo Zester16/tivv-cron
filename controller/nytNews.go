@@ -120,10 +120,10 @@ func GetNYTimesArrayEurope(w http.ResponseWriter, r *http.Request) {
 // This function returns array of newsletter from NYT for USA
 func GetNYTimeArrayUsa(w http.ResponseWriter, r *http.Request) {
 
-	req, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_morning_us")
+	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_morning_us")
 
-	if err != nil || len(req) == 0 {
-		fmt.Println("controller/GetNYTimesArrayEurope/Error: ", err)
+	if err != nil || len(res) == 0 {
+		fmt.Println("controller/GetNYTimesArrayUsa/Error: ", err)
 		w.WriteHeader(400)
 		w.Header().Add("Content-Type", "application/json")
 
@@ -134,10 +134,10 @@ func GetNYTimeArrayUsa(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	str, err := json.Marshal(req)
+	str, err := json.Marshal(res)
 
 	if err != nil {
-		fmt.Println("controller/GetNYTimesArrayEurope/Error: ", err)
+		fmt.Println("controller/GetNYTimesArrayUsa/Error: ", err)
 		w.WriteHeader(400)
 		w.Write([]byte(err.Error()))
 	}
@@ -148,6 +148,31 @@ func GetNYTimeArrayUsa(w http.ResponseWriter, r *http.Request) {
 // This function returns array of evening news from NYT USA
 func GetNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
 
+	res, err := network.PostCrawlGetNYTimeArrayEveningBriefing("nyt_evening_us")
+
+	if err != nil || len(res) == 0 {
+		fmt.Println("controller/GetNYTimesArrayEveningBrief/Error:", err)
+
+		w.WriteHeader(400)
+		w.Header().Add("Content-Type", "application/json")
+
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("some error happened in downstrea,"))
+		}
+	}
+
+	str, err := json.Marshal(res)
+
+	if err != nil {
+		fmt.Println("controller/GetNYTimesArrayEveningBrief/Error: ", err)
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(str))
 }
 
 //********FUNCTION WILL GIVE Cached DATA**********************//
