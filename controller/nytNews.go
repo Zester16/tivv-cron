@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"stockpull/cronjobs"
+	"stockpull/datasource"
 	"stockpull/network"
 )
+
+//var ctx = context.Background()
 
 //////////////*********ALL ENDPOINTS WILL BE FETCHING CACHED DATA FROM REDIS
 
@@ -177,7 +179,31 @@ func GetNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
 }
 
 // ********FUNCTION WILL GIVE Cached DATA**********************//
-func GetCachedNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
-	cronjobs.SetNYTNewsLetterToRedis()
+func GetCachedNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
+	rdb := datasource.RedisConnect()
 
+	redisResp, err := rdb.RedisDBConnector.Get(ctx, "nyt_dealbook").Result()
+
+	if err != nil {
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(redisResp))
+
+}
+
+func GetCachedNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
+
+	rdb := datasource.RedisConnect()
+
+	redisRep, err := rdb.RedisDBConnector.Get(ctx, "nyt_evening_us").Result()
+
+	if err != nil {
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(redisRep))
 }

@@ -39,6 +39,7 @@ func main() {
 	r.HandleFunc("/live/nyt-europe", controller.GetNYTimesArrayEurope)
 	r.HandleFunc("/live/nyt-us", controller.GetNYTimeArrayUsa)
 	r.HandleFunc("/live/nyt-us-evening-brief", controller.GetNYTimeArrayEveningBriefing)
+	r.HandleFunc("/cached/nyt-dealbook-array", controller.GetCachedNYTimeArrayEveningBriefing)
 	r.HandleFunc("/cached/nyt-us-evening-brief", controller.GetCachedNYTimeArrayEveningBriefing)
 	r.HandleFunc("/version", controller.Version)
 
@@ -46,6 +47,7 @@ func main() {
 	//cron job to run every 2 min "*/2 * * * *"
 	//cron job to run at 2H 5Min "5 2 * * *"
 	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+	cn.AddFunc("5 2 * * *", cronjobs.SetNYTNewsLetterToRedis)
 	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("5 2 * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	//cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
