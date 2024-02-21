@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"stockpull/cronjobs"
 	"stockpull/network"
 )
 
@@ -175,4 +176,8 @@ func GetNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(str))
 }
 
-//********FUNCTION WILL GIVE Cached DATA**********************//
+// ********FUNCTION WILL GIVE Cached DATA**********************//
+func GetCachedNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
+	cronjobs.SetNYTNewsLetterToRedis()
+
+}
