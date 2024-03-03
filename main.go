@@ -46,6 +46,7 @@ func main() {
 	cn := cron.New()
 	//cron job to run every 2 min "*/2 * * * *"
 	//cron job to run at 2H 5Min "5 2 * * *"
+	//
 	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	cn.AddFunc("5 2 * * *", cronjobs.SetNYTNewsLetterToRedis)
 	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
