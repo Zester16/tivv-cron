@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"stockpull/cronjobs"
 	"stockpull/datasource"
+	"stockpull/network"
 	"stockpull/utils"
 )
 
@@ -64,6 +66,21 @@ func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(list))
+
+}
+
+func GetBloombergEconomicsNewsLetter(w http.ResponseWriter, r *http.Request) {
+
+	hitUrl := os.Getenv("blm_eco")
+	response, err := network.PostCrawlGetBloombergNewsLetter(hitUrl)
+
+	w.Header().Set("Content-Type", "application/json")
+	if err != nil {
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Write([]byte(response))
 
 }
 
