@@ -8,6 +8,7 @@ import (
 	"os"
 	"stockpull/controller"
 	"stockpull/cronjobs"
+	"stockpull/model"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -21,6 +22,7 @@ func main() {
 		log.Fatal(errEnv)
 	}
 	r := mux.NewRouter()
+	model.BlmTest.SetUrls()
 	r.HandleFunc("/test", controller.Test)
 
 	r.HandleFunc("/live/wsj-all-index", controller.WSJAllIndex)
