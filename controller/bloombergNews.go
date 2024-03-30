@@ -69,8 +69,24 @@ func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetBloombergEconomicsNewsLetter(w http.ResponseWriter, r *http.Request) {
-	blmUrl := model.BlmTest
-	fmt.Println("url", blmUrl)
+	// x := model.BlmTest
+	// for y, z := range x.GetBLMUrls() {
+	// 	fmt.Println(y, z)
+	// }
+	// fmt.Println(x.GetBLMUrls())
+	cronjobs.BmlCronJob()
+	rdb := datasource.RedisConnect()
+	resArr, err := rdb.RedisDBConnector.Get(ctx, model.BLM_ECO).Result()
+
+	if err != nil {
+		fmt.Println("", err.Error())
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(resArr))
+
 	//	hitUrl := os.Getenv("blm_eco")
 	//	response, err := network.PostCrawlGetBloombergNewsLetter(hitUrl)
 

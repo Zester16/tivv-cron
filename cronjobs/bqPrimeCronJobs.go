@@ -14,11 +14,6 @@ import (
 
 var ctx = context.Background()
 
-type NewsObject struct {
-	Date    string `json:"date"`
-	NewsUrl string `json:"newsUrl"`
-}
-
 var BqPrimeName = "bqprimeArray"
 
 func SetBqPrimeNEwsLetterArray() {

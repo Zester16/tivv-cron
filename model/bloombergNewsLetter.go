@@ -22,3 +22,7 @@ func (t *test) SetUrls() {
 	t.blmUrls = bloomberg
 
 }
+
+func (t *test) GetBLMUrls() map[string]string {
+	return t.blmUrls
+}
