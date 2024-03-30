@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"stockpull/model"
 )
 
 func PostCrawlGetBloombergNewsLetter(url string) (string, error) {
@@ -38,5 +39,11 @@ func PostCrawlGetBloombergNewsLetter(url string) (string, error) {
 		return "", err
 	}
 
-	return string(respBody), nil
+	var finalResponse model.BLMResponse
+	json.Unmarshal(respBody, &finalResponse)
+
+	if finalResponse.StatusCode != 0 {
+		return "", err
+	}
+	return finalResponse.Response, nil
 }

@@ -52,6 +52,7 @@ func main() {
 	//
 	cn.AddFunc("5 2 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	cn.AddFunc("5 2 * * *", cronjobs.SetNYTNewsLetterToRedis)
+	cn.AddFunc("5 2 * * *", cronjobs.BmlCronJob)
 	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("5 2 * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	//cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
