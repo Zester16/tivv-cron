@@ -69,8 +69,24 @@ func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetBloombergEconomicsNewsLetter(w http.ResponseWriter, r *http.Request) {
+
+	query := r.URL.Query().Get("topic")
+
+	if query == "" {
+		utils.SetErrorForNoQuery(w)
+		return
+	}
+
+	blmUrls := model.BlmTest.GetBLMUrls()
+
+	url := blmUrls[query]
+
+	if url == "" {
+		utils.SetErrorForNoMatchingQuery(w)
+		return
+	}
 	rdb := datasource.RedisConnect()
-	resArr, err := rdb.RedisDBConnector.Get(ctx, model.BLM_ECO).Result()
+	resArr, err := rdb.RedisDBConnector.Get(ctx, query).Result()
 
 	if err != nil {
 		fmt.Println("", err.Error())
@@ -80,17 +96,6 @@ func GetBloombergEconomicsNewsLetter(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.Write([]byte(resArr))
-
-	//	hitUrl := os.Getenv("blm_eco")
-	//	response, err := network.PostCrawlGetBloombergNewsLetter(hitUrl)
-
-	// w.Header().Set("Content-Type", "application/json")
-	// if err != nil {
-	// 	w.WriteHeader(400)
-	// 	w.Write([]byte(err.Error()))
-	// }
-
-	// w.Write([]byte(response))
 
 }
 
