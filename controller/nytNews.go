@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"stockpull/datasource"
+	"stockpull/model"
 	"stockpull/network"
+	"stockpull/utils"
 )
 
 //var ctx = context.Background()
@@ -193,11 +195,27 @@ func GetCachedNYTimesArrayDealBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetCachedNYTimeArrayEveningBriefing(w http.ResponseWriter, r *http.Request) {
+func GetCachedNYTLetter(w http.ResponseWriter, r *http.Request) {
 
+	topic := r.URL.Query().Get("topic")
+
+	if topic == "" {
+
+		utils.SetErrorForNoQuery(w)
+		return
+	}
+
+	nytUrls := model.BlmTest.GetNYTUrls()
+	value := nytUrls[topic]
+
+	if value == "" {
+		utils.SetErrorForNoMatchingQuery(w)
+
+		return
+	}
 	rdb := datasource.RedisConnect()
 
-	redisRep, err := rdb.RedisDBConnector.Get(ctx, "nyt_evening_us").Result()
+	redisRep, err := rdb.RedisDBConnector.Get(ctx, topic).Result()
 
 	if err != nil {
 		w.WriteHeader(400)

@@ -68,7 +68,7 @@ func GetBQPrimeAllYouNeedToKnowArray(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetBloombergEconomicsNewsLetter(w http.ResponseWriter, r *http.Request) {
+func GetBloombergNewsLetter(w http.ResponseWriter, r *http.Request) {
 
 	query := r.URL.Query().Get("topic")
 
