@@ -30,7 +30,6 @@ func main() {
 	r.HandleFunc("/live/wsj-usa", controller.WSJUsaIndex)
 	r.HandleFunc("/live/wsj-asia", controller.WsjAsia)
 	r.HandleFunc("/live/wsj-europe", controller.WsjEurope)
-	r.HandleFunc("/bloomberg", controller.GetBloombergTechNews)
 	r.HandleFunc("/live/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/live/currency", controller.GetCurrencyValue)

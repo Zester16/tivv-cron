@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"stockpull/model"
 	"stockpull/utils"
 )
 
@@ -17,8 +18,8 @@ type NYTNewsBodyStruct struct {
 
 // calls news letter
 func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytStruct, error) {
-
-	url := utils.NytNewsArray(key)
+	nytNewsArray := model.BlmTest.GetNYTUrls()
+	url := nytNewsArray[key]
 
 	newsUrl := NYTNewsBodyStruct{NewsUrl: url}
 
