@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"stockpull/datasource"
+	"stockpull/model"
 	"stockpull/network"
 	"stockpull/utils"
 )
@@ -16,7 +17,8 @@ type NYTNewsCachingStruct struct {
 func SetNYTNewsLetterToRedis() {
 	rdb := datasource.RedisConnect()
 	c := make(chan NYTNewsCachingStruct)
-	for key, value := range utils.UrlArrays {
+	nytUrls := model.BlmTest.GetNYTUrls()
+	for key, value := range nytUrls {
 		fmt.Println(key, value)
 		go getNewsAndSetData(key, c)
 	}
@@ -30,7 +32,7 @@ func SetNYTNewsLetterToRedis() {
 		}
 		rdb.RedisDBConnector.Set(ctx, x.eventType, j, 0).Err()
 		counter = counter + 1
-		if len(utils.UrlArrays) == counter {
+		if len(nytUrls) == counter {
 			fmt.Println("nytNewsletterCronJob: close chan", counter)
 			close(c)
 		}
