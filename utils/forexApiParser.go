@@ -23,6 +23,14 @@ type ForexObject struct {
 	CHF ForexData `json:"CHF"`
 	SAR ForexData `json:"SAR"`
 	SGD ForexData `json:"SGD"`
+	MXN ForexData `json:"MXN"`
+	SEK ForexData `json:"SEK"`
+	RUB ForexData `json:"RUB"`
+	BRL ForexData `json:"BRL"`
+	TRY ForexData `json:"TRY"`
+	PLN ForexData `json:"PLN"`
+	EGP ForexData `json:"EGP"`
+	IDR ForexData `json:"IDR"`
 }
 
 type ForexData struct {
@@ -45,7 +53,16 @@ func ForexApiJSONParser(input string) []CurrencyData {
 		{Name: "Euro", Code: forexObject.Data.EUR.Code, Value: forexObject.Data.EUR.Value},
 		{Name: "Swiss Franc", Code: forexObject.Data.CHF.Code, Value: forexObject.Data.CHF.Value},
 		{Name: "SA Rand", Code: forexObject.Data.SAR.Code, Value: forexObject.Data.SAR.Value},
-		{Name: "Singapore Dollar", Code: forexObject.Data.SGD.Code, Value: forexObject.Data.SGD.Value}}
+		{Name: "Singapore Dollar", Code: forexObject.Data.SGD.Code, Value: forexObject.Data.SGD.Value},
+		{Name: "Mexican Peso", Code: forexObject.Data.MXN.Code, Value: forexObject.Data.MXN.Value},
+		{Name: "Swedish Krona", Code: forexObject.Data.SEK.Code, Value: forexObject.Data.SEK.Value},
+		{Name: "Russian Ruble", Code: forexObject.Data.RUB.Code, Value: forexObject.Data.RUB.Value},
+		{Name: "Brazilian Lira", Code: forexObject.Data.BRL.Code, Value: forexObject.Data.BRL.Value},
+		{Name: "Turkish Liara", Code: forexObject.Data.TRY.Code, Value: forexObject.Data.TRY.Value},
+		{Name: "Polish Zloty", Code: forexObject.Data.PLN.Code, Value: forexObject.Data.PLN.Value},
+		{Name: "Eyptian Pound", Code: forexObject.Data.EGP.Code, Value: forexObject.Data.EGP.Value},
+		{Name: "Indonesian Rupiya", Code: forexObject.Data.IDR.Code, Value: forexObject.Data.IDR.Value},
+	}
 
 	return currencyData
 }
