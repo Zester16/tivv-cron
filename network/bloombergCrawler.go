@@ -3,6 +3,7 @@ package network
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -43,7 +44,7 @@ func PostCrawlGetBloombergNewsLetter(url string) (string, error) {
 	json.Unmarshal(respBody, &finalResponse)
 
 	if finalResponse.StatusCode != 0 {
-		return "", err
+		return "", errors.New("check backend for issues")
 	}
 	return finalResponse.Response, nil
 }
