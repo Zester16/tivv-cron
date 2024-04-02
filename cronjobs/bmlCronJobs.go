@@ -21,6 +21,7 @@ func BmlCronJob() {
 		response, err := network.PostCrawlGetBloombergNewsLetter(value)
 
 		if err != nil {
+			fmt.Println(LOG_STRUCTURE, "E: ", err)
 			fmt.Println(LOG_STRUCTURE, err.Error())
 			return
 		}
