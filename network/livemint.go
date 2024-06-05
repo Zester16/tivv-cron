@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"stockpull/utils"
 )
 
 func GetLiveMintNewsletter() string {
@@ -24,4 +25,24 @@ func GetLiveMintNewsletter() string {
 	db := string(reqBody)
 	return db
 
+}
+
+func GetMintLiveAllIndex() ([]utils.StockIndex, error) {
+	URL := "https://api-mintgenie.livemint.com/api-gateway/fundamental/api/v2/indices/home/getHomeIndices?forMarkets=false"
+
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		return []utils.StockIndex{}, err
+	}
+
+	parsedBody, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		return []utils.StockIndex{}, err
+	}
+
+	parsedArray := utils.ParseLiveMintAllIndexJson(string(parsedBody))
+
+	return parsedArray, nil
 }

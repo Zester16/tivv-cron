@@ -27,12 +27,6 @@ type Matches struct {
 	ChangePercent string   `xml:"ChangePercent"`
 }
 
-type StockIndex struct {
-	StockIndexName string `json:"stockIndexName"`
-	Points         string `json:"points"`
-	Change         string `json:"change"`
-}
-
 func ReadXML(input string) []StockIndex {
 	var v MidLevel
 	err := xml.Unmarshal([]byte(input), &v)

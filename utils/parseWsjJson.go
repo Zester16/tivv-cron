@@ -6,13 +6,13 @@ import (
 )
 
 type WSJData struct {
-	Datas []WSJJson `json:"data`
+	Datas []WSJJson `json:"data"`
 }
 
 type WSJJson struct {
 	CommonName string `json:"commonName"`
 	Value      string `json:"value"`
-	PerChange  string `json:perChange`
+	PerChange  string `json:"perChange"`
 }
 
 func ParseWsjJson(input string) []StockIndex {
