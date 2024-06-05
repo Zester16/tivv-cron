@@ -39,7 +39,7 @@ func ReadXML(input string) []StockIndex {
 		fmt.Println(v.Indexes[i].RequestId)
 		fmt.Println(v.Indexes[i].Matches.Points)
 		fmt.Println(v.Indexes[i].Matches.ChangePercent)
-		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, Change: v.Indexes[i].Matches.ChangePercent}
+		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, ChangePercent: v.Indexes[i].Matches.ChangePercent}
 		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
 	return stockIndexArray

@@ -10,7 +10,7 @@ type NewsLetterNytStruct struct {
 type StockIndex struct {
 	StockIndexName string `json:"stockIndexName"`
 	Points         string `json:"points"`
-	Change         string `json:"change"`
+	ChangePercent  string `json:"changePercent"`
 }
 
 // struct specific to json

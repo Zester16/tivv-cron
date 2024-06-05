@@ -27,7 +27,7 @@ func ParseWsjJson(input string) []StockIndex {
 	var stockIndexArray []StockIndex
 
 	for i := 0; i < len(dataArray.Datas); i++ {
-		stockIndex := StockIndex{StockIndexName: dataArray.Datas[i].CommonName, Change: dataArray.Datas[i].PerChange, Points: dataArray.Datas[i].Value}
+		stockIndex := StockIndex{StockIndexName: dataArray.Datas[i].CommonName, ChangePercent: dataArray.Datas[i].PerChange, Points: dataArray.Datas[i].Value}
 		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
 
