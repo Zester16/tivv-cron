@@ -8,15 +8,17 @@ import (
 	"time"
 )
 
-// function checks if nqPrime newsletter is present for 2023, if it gives a status 404, then it will remove -2 and sets day
+// function checks if nqPrime newsletter is present for 2024, if it gives a status 404, then it will remove -3 with 2 and sets day
+// if not then 0 is passed
 func GetBQPrimeUrl() string {
 	baseString := `https://www.ndtvprofit.com/business/stock-market-today-all-you-need-to-know-going-into-trade-on-`
 	tm := time.Now()
 	month := tm.Month().String()
 	date := tm.Day()
-	yr := YearToEdgePasser(tm.Year())
-	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date)
+	yr := YearToEdgePasser(tm.Year())                                                      // gives end trailing 1 2 etc
+	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date) //base string
 	fullStringUrl := fullString + "-" + strconv.Itoa(yr)
+	oneDecrementUrl := fullString + "-" + strconv.Itoa(yr-1)
 
 	fmt.Println("Utils:GetBQPrime:fullstring: ", fullString)
 	fmt.Println("Utils:GetBQPrime:fullstringURL: ", fullStringUrl)
@@ -26,6 +28,13 @@ func GetBQPrimeUrl() string {
 	if req.StatusCode == 200 {
 		fmt.Printf("in full string url")
 		return fullStringUrl
+	}
+
+	reqt, _ := http.Get(oneDecrementUrl)
+
+	if reqt.StatusCode == 200 {
+		fmt.Printf("in full string url")
+		return oneDecrementUrl
 	}
 
 	return fullString
@@ -57,7 +66,7 @@ func getMonthAsPerCurrentMonth(month string) string {
 
 func YearToEdgePasser(year int) int {
 	if year == 2024 {
-		return 2
+		return 3
 	} else {
 		return 0
 	}

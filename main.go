@@ -52,7 +52,9 @@ func main() {
 	cn.AddFunc("5 2 * * *", cronjobs.SetNYTNewsLetterToRedis)
 	cn.AddFunc("5 2 * * *", cronjobs.BmlCronJob)
 	cn.AddFunc("5 2 * * *", cronjobs.SetForexCronJob)
-	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
+
+	//for testing
+	cn.AddFunc("* * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("5 2 * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	//cn.AddFunc("* 5 * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
