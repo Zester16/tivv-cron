@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"stockpull/utils"
 )
 
 func GetForex() []utils.CurrencyData {
-	url := "https://api.currencyapi.com/v3/latest?apikey=cur_live_M1vQQ90ktOOaoCpb290qIYSxOTFsEKwkk0jtXq6J"
+	apiKey := os.Getenv("forex_api_key")
+	url := "https://api.currencyapi.com/v3/latest?apikey=" + apiKey
 	body, err := http.Get(url)
 
 	if err != nil {
