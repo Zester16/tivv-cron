@@ -25,6 +25,7 @@ type Matches struct {
 	XMLName       xml.Name `xml:"CompositeTrading"`
 	Points        string   `xml:"Last>Price>Value"`
 	ChangePercent string   `xml:"ChangePercent"`
+	ChangePoint   string   `xml:"NetChange>Value"`
 }
 
 func ReadXML(input string) []StockIndex {
@@ -39,7 +40,7 @@ func ReadXML(input string) []StockIndex {
 		fmt.Println(v.Indexes[i].RequestId)
 		fmt.Println(v.Indexes[i].Matches.Points)
 		fmt.Println(v.Indexes[i].Matches.ChangePercent)
-		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, ChangePercent: v.Indexes[i].Matches.ChangePercent}
+		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, ChangePercent: v.Indexes[i].Matches.ChangePercent, ChangePoint: v.Indexes[i].Matches.ChangePoint}
 		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
 	return stockIndexArray
