@@ -11,6 +11,7 @@ type StockIndex struct {
 	StockIndexName string `json:"stockIndexName"`
 	Points         string `json:"points"`
 	ChangePercent  string `json:"changePercent"`
+	ChangePoint    string `json:"changePoint"`
 }
 
 // struct specific to json
@@ -19,4 +20,5 @@ type LiveMintStockStruct struct {
 	Name          string  `json:"name"`
 	LivePrice     float64 `json:"livePrice"`
 	PercentChange float64 `json:"percentChange"`
+	NetChange     float64 `json:"netChange"`
 }

@@ -11,7 +11,7 @@ func ParseLiveMintAllIndexJson(input string) []StockIndex {
 
 	var stockIndex []StockIndex
 	for _, ind := range dataArray {
-		stockIndex = append(stockIndex, StockIndex{StockIndexName: ind.Name, Points: ChangeFloattoString(ind.LivePrice), ChangePercent: ChangeFloattoString(ind.PercentChange)})
+		stockIndex = append(stockIndex, StockIndex{StockIndexName: ind.Name, Points: ChangeFloattoString(ind.LivePrice), ChangePercent: ChangeFloattoString(ind.PercentChange), ChangePoint: ChangeFloattoString(ind.NetChange)})
 	}
 
 	return stockIndex
