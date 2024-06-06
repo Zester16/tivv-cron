@@ -22,6 +22,7 @@ type ForexObject struct {
 	CNY ForexData `json:"CNY"`
 	CHF ForexData `json:"CHF"`
 	SAR ForexData `json:"SAR"`
+	ZAR ForexData `json:"ZAR"`
 	SGD ForexData `json:"SGD"`
 	MXN ForexData `json:"MXN"`
 	SEK ForexData `json:"SEK"`
@@ -52,7 +53,8 @@ func ForexApiJSONParser(input string) []CurrencyData {
 		{Name: "Chinese Yuan", Code: forexObject.Data.CNY.Code, Value: forexObject.Data.CNY.Value},
 		{Name: "Euro", Code: forexObject.Data.EUR.Code, Value: forexObject.Data.EUR.Value},
 		{Name: "Swiss Franc", Code: forexObject.Data.CHF.Code, Value: forexObject.Data.CHF.Value},
-		{Name: "SA Rand", Code: forexObject.Data.SAR.Code, Value: forexObject.Data.SAR.Value},
+		{Name: "SA Riyal", Code: forexObject.Data.SAR.Code, Value: forexObject.Data.SAR.Value},
+		{Name: "ZA Rand", Code: forexObject.Data.ZAR.Code, Value: forexObject.Data.ZAR.Value},
 		{Name: "Singapore Dollar", Code: forexObject.Data.SGD.Code, Value: forexObject.Data.SGD.Value},
 		{Name: "Mexican Peso", Code: forexObject.Data.MXN.Code, Value: forexObject.Data.MXN.Value},
 		{Name: "Swedish Krona", Code: forexObject.Data.SEK.Code, Value: forexObject.Data.SEK.Value},
