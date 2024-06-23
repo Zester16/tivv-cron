@@ -34,6 +34,7 @@ func main() {
 	r.HandleFunc("/live/mint-india", controller.GetMintLiveNewsArray)
 	r.HandleFunc("/live/bqprime", controller.GetBQPrimeTodaysAllYouNeedToKnowNews)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
+	r.HandleFunc("/live/stock-index", controller.GetAllStockMarkets)
 	r.HandleFunc("/forex", controller.GetCachedCurrencyValue)
 	r.HandleFunc("/mint-news", controller.GetLiveMintNewsletterArray)
 	r.HandleFunc("/live/nyt-dealbook-array", controller.GetNYTimesArrayDealBook)

@@ -6,6 +6,7 @@ import (
 	"stockpull/cronjobs"
 	"stockpull/datasource"
 	"stockpull/network"
+	"stockpull/repository"
 	"stockpull/utils"
 )
 
@@ -39,6 +40,22 @@ func GetMintLiveNewsArray(w http.ResponseWriter, r *http.Request) {
 		utils.SetError400(w, err)
 	}
 	w.Write(strResp)
+}
+func GetAllStockMarkets(w http.ResponseWriter, r *http.Request) {
+
+	resp, err := repository.GetAllStockNews()
+
+	if err != nil {
+		utils.SetError400(w, err)
+	}
+
+	respStr, err := json.Marshal(resp)
+
+	if err != nil {
+		utils.SetError400(w, err)
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(respStr)
 }
 
 // func AddLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
