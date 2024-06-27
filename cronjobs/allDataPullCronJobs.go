@@ -18,16 +18,11 @@ func SetAllStockCronJob() {
 	_, err := rdb.RedisDBConnector.Get(ctx, model.ALL_INDEX_KEY_NAME).Result()
 
 	if err != redis.Nil {
-		fmt.Println(LOG_STRUCTURE+"/ERROR:", err.Error())
+		fmt.Println(LOG_STRUCTURE, "/ERROR:", err.Error())
 		return
 	}
 
 	resStocks, err := repository.GetAllStockNews()
-
-	if err != nil {
-		fmt.Println(LOG_STRUCTURE+"/ERROR:", err.Error())
-		return
-	}
 
 	stockIndexArray := model.StockIndexArray{
 		Data: resStocks,
@@ -37,7 +32,7 @@ func SetAllStockCronJob() {
 	resultMarshalled, err := json.Marshal(stockIndexArray)
 
 	if err != nil {
-		fmt.Println(LOG_STRUCTURE+"/ERROR:", err.Error())
+		fmt.Println(LOG_STRUCTURE, "/ERROR:", err.Error())
 		return
 	}
 
