@@ -7,22 +7,22 @@ import (
 	"stockpull/model"
 	"stockpull/repository"
 	"stockpull/utils"
-
-	"github.com/redis/go-redis/v9"
 )
 
 // gets stocks from respective network and then adds it in array
 func SetAllStockCronJob() {
 	const LOG_STRUCTURE = "cronjobs/SetAllStocksCronJob"
 	rdb := datasource.RedisConnect()
-	_, err := rdb.RedisDBConnector.Get(ctx, model.ALL_INDEX_KEY_NAME).Result()
+	resp, _ := rdb.RedisDBConnector.Get(ctx, model.ALL_INDEX_KEY_NAME).Result()
 
-	if err != redis.Nil {
+	fmt.Println(LOG_STRUCTURE + resp)
+
+	resStocks, err := repository.GetAllStockNews()
+
+	if err != nil {
 		fmt.Println(LOG_STRUCTURE, "/ERROR:", err.Error())
 		return
 	}
-
-	resStocks, err := repository.GetAllStockNews()
 
 	stockIndexArray := model.StockIndexArray{
 		Data: resStocks,
@@ -32,7 +32,7 @@ func SetAllStockCronJob() {
 	resultMarshalled, err := json.Marshal(stockIndexArray)
 
 	if err != nil {
-		fmt.Println(LOG_STRUCTURE, "/ERROR:", err.Error())
+		fmt.Println(LOG_STRUCTURE+"/ERROR:", err.Error())
 		return
 	}
 
