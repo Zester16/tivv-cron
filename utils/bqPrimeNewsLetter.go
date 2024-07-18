@@ -11,8 +11,10 @@ import (
 // function checks if nqPrime newsletter is present for 2024, if it gives a status 404, then it will remove -3 with 2 and sets day
 // if not then 0 is passed
 func GetBQPrimeUrl() string {
-	//OLD_URL=https://www.ndtvprofit.com/business/stock-market-today-all-you-need-to-know-going-into-trade-on- //till june 2024
-	baseString := `https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-before-going-into-trade-on-`
+	//OLD_URL
+	baseString := `https://www.ndtvprofit.com/business/stock-market-today-all-you-need-to-know-going-into-trade-on-`
+	//till june 2024
+	//baseString := `https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-before-going-into-trade-on-`
 	tm := time.Now()
 	month := tm.Month().String()
 	date := tm.Day()
