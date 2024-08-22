@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"stockpull/cronjobs"
 	"stockpull/datasource"
+	"stockpull/model"
 	"stockpull/network"
 	"stockpull/repository"
 	"stockpull/utils"
@@ -56,6 +57,15 @@ func GetAllStockMarkets(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(respStr)
+}
+
+func GetAllStocksCached(w http.ResponseWriter, r *http.Request) {
+	rdx := datasource.RedisConnect()
+
+	resp, _ := rdx.RedisDBConnector.Get(ctx, model.ALL_INDEX_KEY_NAME).Result()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(resp))
 }
 
 // func AddLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {

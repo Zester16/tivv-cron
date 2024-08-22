@@ -43,6 +43,7 @@ func main() {
 	r.HandleFunc("/live/nyt-europe", controller.GetNYTimesArrayEurope)
 	r.HandleFunc("/live/nyt-us", controller.GetNYTimeArrayUsa)
 	r.HandleFunc("/nyt-newsletter", controller.GetCachedNYTLetter)
+	r.HandleFunc("/stock-index", controller.GetAllStocksCached)
 	r.HandleFunc("/blm-news", controller.GetBloombergNewsLetter)
 	r.HandleFunc("/version", controller.Version)
 
