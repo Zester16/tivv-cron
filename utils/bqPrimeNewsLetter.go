@@ -14,17 +14,27 @@ func GetBQPrimeUrl() string {
 	//OLD_URL
 	baseString := `https://www.ndtvprofit.com/business/stock-market-today-all-you-need-to-know-going-into-trade-on-`
 	//till june 2024
-	//baseString := `https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-before-going-into-trade-on-`
+	baseString_2024 := `https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-before-going-into-trade-on-`
+
 	tm := time.Now()
 	month := tm.Month().String()
 	date := tm.Day()
 	yr := YearToEdgePasser(tm.Year())                                                      // gives end trailing 1 2 etc
 	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date) //base string
+	fullString2024 := baseString_2024 + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date)
 	fullStringUrl := fullString + "-" + strconv.Itoa(yr)
 	oneDecrementUrl := fullString + "-" + strconv.Itoa(yr-1)
 
+	fmt.Println("Utils:GetBQPrime:fullstring2024: ", fullString2024)
 	fmt.Println("Utils:GetBQPrime:fullstring: ", fullString)
 	fmt.Println("Utils:GetBQPrime:fullstringURL: ", fullStringUrl)
+
+	req2024, _ := http.Get(fullString2024)
+
+	if req2024.StatusCode == 200 {
+		fmt.Printf("in 2024 full string url")
+		return fullString2024
+	}
 
 	req, _ := http.Get(fullStringUrl)
 
