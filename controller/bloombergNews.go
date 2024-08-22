@@ -99,6 +99,22 @@ func GetBloombergNewsLetter(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func GetBloombergNewsLetterV2(w http.ResponseWriter, r *http.Request) {
+
+	rdb := datasource.RedisConnect()
+	resArr, err := rdb.RedisDBConnector.Get(ctx, model.BL_NS).Result()
+
+	if err != nil {
+		fmt.Println("", err.Error())
+		w.WriteHeader(400)
+		w.Write([]byte(err.Error()))
+
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(resArr))
+
+}
+
 // func GetLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
 // 	//	rdb := datasource.RedisConnect()
 // 	cronjobs.SetMintTopOfMorningNewsletter()

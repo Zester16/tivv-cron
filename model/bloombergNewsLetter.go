@@ -9,6 +9,7 @@ const BLM_FIVE = "blm_five"
 const BLM_ECO = "blm_eco"
 const BLM_EUROPE = "blm_europe"
 const BLM_TECH = "blm_tech"
+const BL_NS = "bl-ns"
 
 /*
 * all nyt keys

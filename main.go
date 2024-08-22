@@ -44,8 +44,8 @@ func main() {
 	r.HandleFunc("/live/nyt-us", controller.GetNYTimeArrayUsa)
 	r.HandleFunc("/nyt-newsletter", controller.GetCachedNYTLetter)
 	r.HandleFunc("/stock-index", controller.GetAllStocksCached)
-	r.HandleFunc("/v1/blm-news", controller.GetBloombergNewsLetter)
-	r.HandleFunc("/v2/blm-news", controller.GetBloombergNewsLetter)
+	r.HandleFunc("/v1/blm-news", controller.GetBloombergNewsLetter) //depreciated
+	r.HandleFunc("/v2/blm-news", controller.GetBloombergNewsLetterV2)
 	r.HandleFunc("/version", controller.Version)
 
 	cn := cron.New()
