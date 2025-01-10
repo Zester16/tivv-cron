@@ -22,6 +22,12 @@ func GetBQPrimeUrl() string {
 	yr := YearToEdgePasser(tm.Year())                                                      // gives end trailing 1 2 etc
 	fullString := baseString + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date) //base string
 	fullString2024 := baseString_2024 + getMonthAsPerCurrentMonth(month) + "-" + strconv.Itoa(date)
+
+	//creating url
+	fullStringUrl2024 := fullString2024 + "-" + strconv.Itoa(yr)
+	oneDecrementUrl2024 := fullString2024 + strconv.Itoa(yr-1)
+
+	//old url decreament
 	fullStringUrl := fullString + "-" + strconv.Itoa(yr)
 	oneDecrementUrl := fullString + "-" + strconv.Itoa(yr-1)
 
@@ -29,11 +35,18 @@ func GetBQPrimeUrl() string {
 	fmt.Println("Utils:GetBQPrime:fullstring: ", fullString)
 	fmt.Println("Utils:GetBQPrime:fullstringURL: ", fullStringUrl)
 
-	req2024, _ := http.Get(fullString2024)
+	req2024, _ := http.Get(fullStringUrl2024)
 
 	if req2024.StatusCode == 200 {
 		fmt.Printf("in 2024 full string url")
-		return fullString2024
+		return fullStringUrl2024
+	}
+
+	req2024Decr, _ := http.Get(oneDecrementUrl2024)
+
+	if req2024Decr.StatusCode == 200 {
+		fmt.Println("in 2024 one string decreament ")
+		return oneDecrementUrl2024
 	}
 
 	req, _ := http.Get(fullStringUrl)
@@ -78,7 +91,7 @@ func getMonthAsPerCurrentMonth(month string) string {
 }
 
 func YearToEdgePasser(year int) int {
-	if year == 2024 {
+	if year == 2025 {
 		return 3
 	} else {
 		return 0
