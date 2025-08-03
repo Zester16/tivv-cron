@@ -66,7 +66,7 @@ func main() {
 	//cn.AddFunc("* * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("* * * * *", cronjobs.SetForexCronJob)
 	//cn.AddFunc("* * * * *", cronjobs.SetAllStockCronJob)
-	cn.AddFunc("* * * * *", cronjobs.SetMintTopOfMorningNewsletter)
+	//cn.AddFunc("* * * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
 	// 	log.Fatal(err)
 	// }
