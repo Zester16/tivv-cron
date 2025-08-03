@@ -4,28 +4,34 @@ import (
 	"encoding/json"
 	"fmt"
 	"stockpull/datasource"
-	"stockpull/network"
+	"stockpull/model"
+	"stockpull/services"
 	"stockpull/utils"
 
 	"github.com/redis/go-redis/v9"
 )
 
-var RedisKeyMintNewLetter = "livemint-totm-nm"
-
 func SetMintTopOfMorningNewsletter() {
 	fmt.Println("MinttopOfTheMorningCronJob")
+
+	var RedisKeyMintNewLetter = model.MINT_TOP_OF_MORNING
 	rdb := datasource.RedisConnect()
 
 	newsletterString, redisErr := rdb.RedisDBConnector.Get(ctx, RedisKeyMintNewLetter).Result()
 
-	newsBody := network.GetLiveMintNewsletter()
+	url, urlError := services.GetLivemintTopOfTheDayUrl()
+
+	if urlError != nil {
+		fmt.Println("cron:SetMintTopOfMorningNewsletter err", urlError.Error())
+	}
+
 	//fmt.Println(newsBody)
+	var newNewsArray = []NewsObject{{Date: utils.GetTodaysDateToString(), NewsUrl: url}}
 
-	newNewsArray := []NewsLetterStruct{{Date: utils.GetTodaysDateToString(), NewsBody: newsBody}}
-
-	if redisErr != redis.Nil {
-		oldNewsArray := []NewsLetterStruct{}
+	if redisErr != redis.Nil && urlError == nil {
+		oldNewsArray := []NewsObject{}
 		err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
+
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -38,6 +44,8 @@ func SetMintTopOfMorningNewsletter() {
 			newNewsArray = oldNewsArray
 			fmt.Println("LivemintNewsCronJob", "Its weekend")
 		}
+	} else {
+		fmt.Println("SetMintTopOfMorningNewsletter Error:", urlError)
 	}
 
 	j, err := json.Marshal(newNewsArray)

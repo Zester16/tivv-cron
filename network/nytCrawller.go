@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"stockpull/model"
-	"stockpull/utils"
 )
 
 // struct for sending proper header
@@ -17,7 +16,7 @@ type NYTNewsBodyStruct struct {
 }
 
 // calls news letter
-func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytStruct, error) {
+func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]model.NewsLetterNytStruct, error) {
 	nytNewsArray := model.BlmTest.GetNYTUrls()
 	url := nytNewsArray[key]
 
@@ -31,7 +30,7 @@ func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytSt
 
 	if err != nil {
 		fmt.Println("network/post/PostCrawlGetNYTimeArray", err)
-		return []utils.NewsLetterNytStruct{}, err
+		return []model.NewsLetterNytStruct{}, err
 	}
 
 	r.Header.Set("news_url", url)
@@ -41,16 +40,16 @@ func PostCrawlGetNYTimeArrayEveningBriefing(key string) ([]utils.NewsLetterNytSt
 
 	if err != nil {
 		fmt.Println("network/post/PostCrawlGetNYTimeArray http Error:", err)
-		return []utils.NewsLetterNytStruct{}, err
+		return []model.NewsLetterNytStruct{}, err
 	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Println("network/post/PostCrawlGetNYTimeArray body Error:", err)
-		return []utils.NewsLetterNytStruct{}, err
+		return []model.NewsLetterNytStruct{}, err
 	}
 
-	var newsLetterStruct []utils.NewsLetterNytStruct
+	var newsLetterStruct []model.NewsLetterNytStruct
 
 	sb := string(body)
 	fmt.Println(sb)

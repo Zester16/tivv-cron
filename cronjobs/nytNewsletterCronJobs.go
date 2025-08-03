@@ -6,12 +6,11 @@ import (
 	"stockpull/datasource"
 	"stockpull/model"
 	"stockpull/network"
-	"stockpull/utils"
 )
 
 type NYTNewsCachingStruct struct {
 	eventType        string
-	newsLetterStruct []utils.NewsLetterNytStruct
+	newsLetterStruct []model.NewsLetterNytStruct
 }
 
 func SetNYTNewsLetterToRedis() {

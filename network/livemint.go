@@ -4,42 +4,42 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"stockpull/model"
 	"stockpull/utils"
 )
 
-func GetLiveMintNewsletter() string {
+// passes livmint url to check if url works or not
+func CheckLiveMintNewsletterUrl(url string) bool {
 
-	url := "https://www.livemint.com/mint-top-newsletter/minttopofthemorning.html"
 	response, err := http.Get(url)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error: CheckLiveMintNewsletterUrl:", err)
+		return false
 	}
 
-	reqBody, err := ioutil.ReadAll(response.Body)
-
-	if err != nil {
-		fmt.Println(err)
+	if response.StatusCode != 200 {
+		fmt.Println("Error: CheckLiveMintNewsletterUrl:", response.StatusCode)
+		return false
 	}
 
-	db := string(reqBody)
-	return db
+	return true
 
 }
 
-func GetMintLiveAllIndex() ([]utils.StockIndex, error) {
+func GetMintLiveAllIndex() ([]model.StockIndex, error) {
 	URL := "https://api-mintgenie.livemint.com/api-gateway/fundamental/api/v2/indices/home/getHomeIndices?forMarkets=false"
 
 	resp, err := http.Get(URL)
 
 	if err != nil {
-		return []utils.StockIndex{}, err
+		return []model.StockIndex{}, err
 	}
 
 	parsedBody, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		return []utils.StockIndex{}, err
+		return []model.StockIndex{}, err
 	}
 
 	parsedArray := utils.ParseLiveMintAllIndexJson(string(parsedBody))

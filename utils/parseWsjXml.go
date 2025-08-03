@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"log"
+	"stockpull/model"
 )
 
 type TopLevel struct {
@@ -28,19 +29,19 @@ type Matches struct {
 	ChangePoint   string   `xml:"NetChange>Value"`
 }
 
-func ReadXML(input string) []StockIndex {
+func ReadXML(input string) []model.StockIndex {
 	var v MidLevel
 	err := xml.Unmarshal([]byte(input), &v)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	//fmt.Println(v.Indexe)
-	var stockIndexArray []StockIndex
+	var stockIndexArray []model.StockIndex
 	for i := 0; i < len(v.Indexes); i++ {
 		fmt.Println(v.Indexes[i].RequestId)
 		fmt.Println(v.Indexes[i].Matches.Points)
 		fmt.Println(v.Indexes[i].Matches.ChangePercent)
-		stockIndex := StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, ChangePercent: v.Indexes[i].Matches.ChangePercent, ChangePoint: v.Indexes[i].Matches.ChangePoint}
+		stockIndex := model.StockIndex{StockIndexName: v.Indexes[i].RequestId, Points: v.Indexes[i].Matches.Points, ChangePercent: v.Indexes[i].Matches.ChangePercent, ChangePoint: v.Indexes[i].Matches.ChangePoint}
 		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
 	return stockIndexArray

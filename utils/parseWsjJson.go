@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"stockpull/model"
 )
 
 type WSJData struct {
@@ -15,7 +16,7 @@ type WSJJson struct {
 	PerChange  string `json:"perChange"`
 }
 
-func ParseWsjJson(input string) []StockIndex {
+func ParseWsjJson(input string) []model.StockIndex {
 
 	var dataArray WSJData
 
@@ -24,10 +25,10 @@ func ParseWsjJson(input string) []StockIndex {
 	if err != nil {
 		fmt.Println("WSJ-JSON", err)
 	}
-	var stockIndexArray []StockIndex
+	var stockIndexArray []model.StockIndex
 
 	for i := 0; i < len(dataArray.Datas); i++ {
-		stockIndex := StockIndex{StockIndexName: dataArray.Datas[i].CommonName, ChangePercent: dataArray.Datas[i].PerChange, Points: dataArray.Datas[i].Value}
+		stockIndex := model.StockIndex{StockIndexName: dataArray.Datas[i].CommonName, ChangePercent: dataArray.Datas[i].PerChange, Points: dataArray.Datas[i].Value}
 		stockIndexArray = append(stockIndexArray, stockIndex)
 	}
 

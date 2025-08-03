@@ -36,6 +36,7 @@ func main() {
 	r.HandleFunc("/live/stock-index", controller.GetAllStockMarkets)
 	r.HandleFunc("/forex", controller.GetCachedCurrencyValue)
 	r.HandleFunc("/v1/wsj-newsletter", controller.WSJNewsLetterIndex)
+	r.HandleFunc("/v1/lm-topofmorning", controller.GetLiveMintNewsletterArray)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/mint-news", controller.GetLiveMintNewsletterArray)
 	r.HandleFunc("/live/nyt-dealbook-array", controller.GetNYTimesArrayDealBook)
@@ -58,13 +59,14 @@ func main() {
 	cn.AddFunc("5 2 * * *", cronjobs.BmlCronJob)
 	cn.AddFunc("5 2 * * *", cronjobs.SetForexCronJob)
 	cn.AddFunc("5 2 * * *", cronjobs.SetAllStockCronJob)
+	cn.AddFunc("5 2 * * *", cronjobs.SetMintTopOfMorningNewsletter)
 
 	//for testing
 	//cn.AddFunc("* * * * *", cronjobs.SetAllStockCronJob)
 	//cn.AddFunc("* * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	//cn.AddFunc("* * * * *", cronjobs.SetForexCronJob)
 	//cn.AddFunc("* * * * *", cronjobs.SetAllStockCronJob)
-
+	cn.AddFunc("* * * * *", cronjobs.SetMintTopOfMorningNewsletter)
 	// if err := http.ListenAndServe(":"+port, nil); err != nil {
 	// 	log.Fatal(err)
 	// }

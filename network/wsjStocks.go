@@ -5,10 +5,11 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"stockpull/model"
 	"stockpull/utils"
 )
 
-func GetAsiaIndex() []utils.StockIndex {
+func GetAsiaIndex() []model.StockIndex {
 
 	resp, err := http.Get("https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=charting&id=INDEX%2FXX%2F%2FADOW%2CINDEX%2FHK%2FXHKG%2FHSI%2CINDEX%2FSG%2FXSES%2FSTI%2C%2FKR%2F%2FSEU&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90")
 	if err != nil {
@@ -23,7 +24,7 @@ func GetAsiaIndex() []utils.StockIndex {
 	return stockTickerArray
 }
 
-func GetEuropeIndex() []utils.StockIndex {
+func GetEuropeIndex() []model.StockIndex {
 	resp, err := http.Get("https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=charting&id=INDEX%2FFR%2F%2FPX1%2CSX5P%2CINDEX%2FUK%2F%2FMCX&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90")
 	if err != nil {
 		fmt.Println(err)
@@ -43,7 +44,7 @@ func GetEuropeIndex() []utils.StockIndex {
 	return stockTickerArray
 }
 
-func GetAllIndex() []utils.StockIndex {
+func GetAllIndex() []model.StockIndex {
 	europeIndexArray := GetEuropeIndex()
 	asiaIndexAray := GetAsiaIndex()
 	usaIndexArray := GetWSJUSAIndex()
@@ -53,7 +54,7 @@ func GetAllIndex() []utils.StockIndex {
 	return allIdex
 }
 
-func GetWSJBonds() []utils.StockIndex {
+func GetWSJBonds() []model.StockIndex {
 	url := "https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=charting&id=Bond%2FBX%2FXTUP%2FTMUBMUSD10Y%2CINDEX%2FUS%2FCBSX%2FVIX%2CGC00%2CFUTURE%2FUS%2F%2FCrude+Oil+-+Electronic%2CBUXX%2CBKX%2CSPGSCI&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90"
 
 	response, err := http.Get(url)
@@ -70,7 +71,7 @@ func GetWSJBonds() []utils.StockIndex {
 
 	return list
 }
-func GetWSJUSAIndex() []utils.StockIndex {
+func GetWSJUSAIndex() []model.StockIndex {
 	url := "https://api.wsj.net/api/dylan/quotes/v2/comp/quoteByDialect?ckey=57494d5ed7&dialect=djid&id=343338%2C497001%2C343345%2C343303%2C433-25014677&maxinstrumentmatches=1&needed=Meta%7CCompositeTrading%7CBlueGrassChannels&EntitlementToken=57494d5ed7ad44af85bc59a51dd87c90"
 
 	response, err := http.Get(url)

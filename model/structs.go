@@ -1,4 +1,4 @@
-package utils
+package model
 
 //GENERIC STRUCTS
 type NewsLetterNytStruct struct {

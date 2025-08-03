@@ -3,28 +3,34 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
-	"stockpull/cronjobs"
 	"stockpull/datasource"
 	"stockpull/model"
 	"stockpull/network"
 	"stockpull/repository"
+	"stockpull/services"
 	"stockpull/utils"
 )
 
 func GetLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
-	rdb := datasource.RedisConnect()
+	// rdb := datasource.RedisConnect()
 
-	lmNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, cronjobs.RedisKeyMintNewLetter).Result()
+	// lmNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, cronjobs.RedisKeyMintNewLetter).Result()
 
-	if rdbError != nil {
+	// if rdbError != nil {
 
-		w.Write([]byte(rdbError.Error()))
-	}
-
+	// 	w.Write([]byte(rdbError.Error()))
+	// }
 	//cronjobs.SetMintTopOfMorningNewsletter()
 
-	w.Header().Add("Content-Type", "application/json")
-	w.Write([]byte(lmNewsArray))
+	//w.Header().Add("Content-Type", "application/json")
+	url, err := services.GetLivemintTopOfTheDayUrl()
+
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	w.Write([]byte(url))
 }
 
 func GetMintLiveNewsArray(w http.ResponseWriter, r *http.Request) {
