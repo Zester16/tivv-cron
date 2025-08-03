@@ -2,7 +2,10 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"stockpull/datasource"
+	"stockpull/model"
 	"stockpull/network"
 )
 
@@ -51,4 +54,22 @@ func WSJUsaIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(j)
+}
+
+// gets WSJ Letters stored in DB and sends back
+func WSJNewsLetterIndex(w http.ResponseWriter, r *http.Request) {
+	topic := model.WSJ_ALL_NS
+	rdb := datasource.RedisConnect()
+	resArray, err := rdb.RedisDBConnector.Get(ctx, topic).Result()
+
+	if err != nil {
+		fmt.Println("WSJNewsletterIndex error:", err.Error())
+		w.WriteHeader(400)
+
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(resArray))
+
 }
