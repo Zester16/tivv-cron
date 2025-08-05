@@ -5,5 +5,5 @@ env_variables:
   BUCKET_NAME: "example-gcs-bucket"
 
 handlers:
-- url: /.*
-  script: auto
+  - url: /.*
+    script: auto
