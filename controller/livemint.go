@@ -7,32 +7,35 @@ import (
 	"stockpull/model"
 	"stockpull/network"
 	"stockpull/repository"
-	"stockpull/services"
 	"stockpull/utils"
 )
 
+/*
+* To get an array of livemint top of the morning news
+ */
 func GetLiveMintNewsletterArray(w http.ResponseWriter, r *http.Request) {
-	// rdb := datasource.RedisConnect()
+	rdb := datasource.RedisConnect()
 
-	// lmNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, cronjobs.RedisKeyMintNewLetter).Result()
+	lmNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, model.MINT_TOP_OF_MORNING).Result()
 
-	// if rdbError != nil {
+	if rdbError != nil {
 
-	// 	w.Write([]byte(rdbError.Error()))
-	// }
+		w.Write([]byte(rdbError.Error()))
+	}
+	//for live newsletter
 	//cronjobs.SetMintTopOfMorningNewsletter()
+	//url, err := services.GetLivemintTopOfTheDayUrl()
+	w.Header().Add("Content-Type", "application/json")
 
-	//w.Header().Add("Content-Type", "application/json")
-	url, err := services.GetLivemintTopOfTheDayUrl()
-
-	if err != nil {
-		w.Write([]byte(err.Error()))
+	if rdbError != nil {
+		w.Write([]byte(rdbError.Error()))
 		return
 	}
 
-	w.Write([]byte(url))
+	w.Write([]byte(lmNewsArray))
 }
 
+// to get all 3 stock market indexes live than morning cached data
 func GetMintLiveNewsArray(w http.ResponseWriter, r *http.Request) {
 	resp, err := network.GetMintLiveAllIndex()
 
@@ -48,6 +51,8 @@ func GetMintLiveNewsArray(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(strResp)
 }
+
+// gets stock all live stock index from WSJ and Livemint and sends as one
 func GetAllStockMarkets(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := repository.GetAllStockNews()
@@ -65,6 +70,7 @@ func GetAllStockMarkets(w http.ResponseWriter, r *http.Request) {
 	w.Write(respStr)
 }
 
+// gets all cached stock market indexes which runs in morning
 func GetAllStocksCached(w http.ResponseWriter, r *http.Request) {
 	rdx := datasource.RedisConnect()
 
