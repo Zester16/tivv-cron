@@ -92,6 +92,7 @@ func main() {
 	//cn.AddFunc("*/2 * * * *", cronjobs.SetBqPrimeNEwsLetterArray)
 	// cn.AddFunc("*/2 * * * *", func() {
 	// 	cronjobs.SetBqPrimeNEwsLetterArray()
+	//cronjobs.SetMintTopOfMorningNewsletter()
 	// 	fmt.Println("Cron running")
 	// })
 

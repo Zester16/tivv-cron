@@ -28,7 +28,7 @@ func SetMintTopOfMorningNewsletter() {
 	//fmt.Println(newsBody)
 	var newNewsArray = []NewsObject{{Date: utils.GetTodaysDateToString(), NewsUrl: url}}
 
-	if redisErr != redis.Nil && urlError == nil {
+	if redisErr != redis.Nil {
 		oldNewsArray := []NewsObject{}
 		err := json.Unmarshal([]byte(newsletterString), &oldNewsArray)
 
@@ -37,20 +37,25 @@ func SetMintTopOfMorningNewsletter() {
 		}
 		isWeekend := utils.CheckTodayIsWeekend()
 		fmt.Println(isWeekend)
-		if (oldNewsArray[0].Date != newNewsArray[0].Date) && !isWeekend {
+		if (oldNewsArray[0].Date != newNewsArray[0].Date) && !isWeekend && urlError == nil {
 			newNewsArray = append(newNewsArray, oldNewsArray...)
 			fmt.Println("LivemintNewsCronJob", "Its weekday")
 		} else {
 			newNewsArray = oldNewsArray
-			fmt.Println("LivemintNewsCronJob", "Its weekend")
+			if isWeekend {
+				fmt.Println("LivemintNewsCronJob", "Its weekend")
+			}
+			if urlError != nil {
+				fmt.Println("LivemintNewsCronJob error:", urlError.Error())
+			}
+
 		}
-	} else {
-		fmt.Println("SetMintTopOfMorningNewsletter Error:", urlError)
 	}
 
 	j, err := json.Marshal(newNewsArray)
 	if err != nil {
 		fmt.Println("LivemintNewsMarshal Error: ", err)
 	}
+	fmt.Println("SetMintTopOfMorning lewsleter cronjob completed")
 	rdb.RedisDBConnector.Set(ctx, RedisKeyMintNewLetter, j, 0).Err()
 }
