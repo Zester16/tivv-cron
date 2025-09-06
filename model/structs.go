@@ -22,3 +22,21 @@ type LiveMintStockStruct struct {
 	PercentChange float64 `json:"percentChange"`
 	NetChange     float64 `json:"netChange"`
 }
+
+//main struct which will hold count array
+type TotalNewslettersArray struct {
+	Data []PerNewsLetterCountStruct `json:"data"`
+	Date string                     `json:"date"`
+}
+
+//for holding the count object
+type PerNewsLetterCountStruct struct {
+	Name  string `json:"name"`
+	Total int    `json:"total"`
+}
+
+//since date is one object which is common for all structs, only date is parsed
+
+type NewsLetterDate struct {
+	Date string
+}

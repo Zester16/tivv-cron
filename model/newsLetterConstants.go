@@ -9,6 +9,8 @@ const BLM_FIVE = "blm_five"
 const BLM_ECO = "blm_eco"
 const BLM_EUROPE = "blm_europe"
 const BLM_TECH = "blm_tech"
+
+//active
 const BL_NS = "bl-ns"
 
 /*
@@ -31,6 +33,11 @@ const WSJ_ALL_NS = "wsj-ns"
 * For livemint top of morning newsletter
  */
 const MINT_TOP_OF_MORNING = "mint_toftm_nl"
+
+/*
+* To Get Total count of newsletters from all connection
+ */
+const TOTAL = "total-nl-count"
 
 var BloombergUrls = map[string]string{}
 
@@ -64,4 +71,10 @@ func (t *test) GetBLMUrls() map[string]string {
 
 func (t *test) GetNYTUrls() map[string]string {
 	return t.nytUrls
+}
+
+var RedisKey = map[string]string{
+	"mintTopOfMorning": MINT_TOP_OF_MORNING,
+	"bloomberg":        BL_NS,
+	"wsj":              WSJ_ALL_NS,
 }
