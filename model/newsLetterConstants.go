@@ -39,6 +39,11 @@ const MINT_TOP_OF_MORNING = "mint_toftm_nl"
  */
 const TOTAL = "total-nl-count"
 
+/**
+* for globe and mail
+**/
+const GLOBE_MAIL = "tgam-ns"
+
 var BloombergUrls = map[string]string{}
 
 type test struct {
@@ -77,4 +82,5 @@ var RedisKey = map[string]string{
 	"mintTopOfMorning": MINT_TOP_OF_MORNING,
 	"bloomberg":        BL_NS,
 	"wsj":              WSJ_ALL_NS,
+	"globe_and_mail":   GLOBE_MAIL,
 }
