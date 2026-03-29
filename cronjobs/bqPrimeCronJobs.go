@@ -22,7 +22,12 @@ func SetBqPrimeNEwsLetterArray() {
 
 	bqArrayString, err := rdb.RedisDBConnector.Get(ctx, BqPrimeName).Result()
 
-	url := utils.GetBQPrimeUrl()
+	url, err := utils.GetBQPrimeUrlV2()
+
+	if err != nil {
+
+		fmt.Println("SetBqPrimeNewsletter ", err.Error())
+	}
 
 	fmt.Println("bqPrimeCron: ", url)
 

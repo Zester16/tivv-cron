@@ -44,6 +44,21 @@ const TOTAL = "total-nl-count"
 **/
 const GLOBE_MAIL = "tgam-ns"
 
+/**
+* for National UAE
+ */
+const NATIONAL_UAE = "ntl-emi-ns"
+
+/*
+* SMH
+**/
+const SMH = "smh-ns"
+
+/**
+* BQPrime Array
+**/
+const BQPRIME_TOTM = "bqprimeArray"
+
 var BloombergUrls = map[string]string{}
 
 type test struct {
@@ -79,8 +94,11 @@ func (t *test) GetNYTUrls() map[string]string {
 }
 
 var RedisKey = map[string]string{
-	"mintTopOfMorning": MINT_TOP_OF_MORNING,
-	"bloomberg":        BL_NS,
-	"wsj":              WSJ_ALL_NS,
-	"globe_and_mail":   GLOBE_MAIL,
+	"mintTopOfMorning":      MINT_TOP_OF_MORNING,
+	"bloomberg":             BL_NS,
+	"wsj":                   WSJ_ALL_NS,
+	"globe_and_mail":        GLOBE_MAIL,
+	"the_national":          NATIONAL_UAE,
+	"NDTV Profit":           BQPRIME_TOTM,
+	"sydney_morning_herald": SMH,
 }
