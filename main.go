@@ -44,6 +44,7 @@ func main() {
 	r.HandleFunc("/forex", controller.GetCachedCurrencyValue)
 	r.HandleFunc("/v1/wsj-newsletter", controller.WSJNewsLetterIndex)
 	r.HandleFunc("/v1/lm-topofmorning", controller.GetLiveMintNewsletterArray)
+	r.HandleFunc("/v1/gam-newsletter", controller.GetGlobeAndMailNewsletters)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/nyt-newsletter", controller.GetCachedNYTLetter)
 	r.HandleFunc("/stock-index", controller.GetAllStocksCached)

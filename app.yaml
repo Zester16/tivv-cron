@@ -1,4 +1,4 @@
-runtime: go121
+runtime: go124
 instance_class: F1
 env: standard
 env_variables:

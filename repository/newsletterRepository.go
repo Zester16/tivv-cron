@@ -64,7 +64,7 @@ func createTotalNewsLetterListAndSetinDB() (model.TotalNewslettersArray, error) 
 
 		} else {
 			fmt.Println(funcName, "Data Pull ERROR: ", err.Error())
-			return tnla, err
+			//return tnla, err
 		}
 
 	}

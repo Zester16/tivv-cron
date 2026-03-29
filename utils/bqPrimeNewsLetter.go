@@ -1,12 +1,56 @@
 package utils
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"os"
+	"stockpull/model"
 	"strconv"
 	"strings"
 	"time"
 )
+
+// New function for BQPrime Url
+// TODO: Add Functionality later to check date
+func GetBQPrimeUrlV2() (string, error) {
+	funcName := "Network:GetBQPrimeNewsletter: "
+	fmt.Println("Starting with fetching BQPrime Newsletter")
+	URL := os.Getenv("sab_crawler")
+
+	test, err := http.Get(URL)
+
+	if test.StatusCode != 200 || err != nil {
+		time.Sleep(20 * time.Second)
+	}
+
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		fmt.Println(funcName, err.Error())
+		return "", err
+	}
+
+	if resp.StatusCode != 200 {
+
+		fmt.Println(funcName, strconv.Itoa(resp.StatusCode))
+		return "", errors.New("StatusCode is not 200")
+	}
+
+	respBody, err := ioutil.ReadAll(resp.Body)
+
+	var newsArr []model.BQPrimeCrawlResponse
+	json.Unmarshal(respBody, &newsArr)
+
+	if len(newsArr) > 0 {
+		return newsArr[0].Url, nil
+	}
+
+	return "", errors.New("Some error happened")
+
+}
 
 // function checks if nqPrime newsletter is present for 2024, if it gives a status 404, then it will remove -3 with 2 and sets day
 // if not then 0 is passed
