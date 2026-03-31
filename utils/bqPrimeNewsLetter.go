@@ -23,7 +23,7 @@ func GetBQPrimeUrlV2() (string, error) {
 	test, err := http.Get(URL)
 
 	if test.StatusCode != 200 || err != nil {
-		time.Sleep(20 * time.Second)
+		time.Sleep(200 * time.Second)
 	}
 
 	resp, err := http.Get(URL)
