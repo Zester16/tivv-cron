@@ -30,7 +30,7 @@ func SetForexCronJob() {
 		}
 		fmt.Println(LOGGER, "S: ", "Updated data on", utils.GetTodaysDateToString())
 	} else {
-		for i, ele := range newForexString {
+		for i, ele := range oldForexData.Data {
 			oldVal := oldForexData.Data[i].Value
 			change := ele.Value - oldVal
 			cp := (change / oldVal) * 100
