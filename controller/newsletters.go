@@ -40,11 +40,30 @@ func GetNationalNewsletters(w http.ResponseWriter, r *http.Request) {
 }
 
 // For getting SAUSA newsletters
-func GetSausaNewsletters(w *http.ResponseWriter, r *http.Request) {
+func GetSausaNewsletters(w http.ResponseWriter, r *http.Request) {
+	rdb := datasource.RedisConnect()
 
+	nationalNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, model.STOCK_MARKET_ANALYSIS).Result()
+
+	if rdbError != nil {
+		utils.SetError400(w, rdbError)
+	}
+
+	w.Header().Add("Content-Type", "Application/json")
+	w.Write([]byte(nationalNewsArray))
 }
 
 // for getting SMH Newsletters
-func GetSMHNewsletters(w *http.ResponseWriter, r *http.Request) {
+func GetSmhNewsletters(w http.ResponseWriter, r *http.Request) {
 
+	rdb := datasource.RedisConnect()
+
+	nationalNewsArray, rdbError := rdb.RedisDBConnector.Get(ctx, model.SMH).Result()
+
+	if rdbError != nil {
+		utils.SetError400(w, rdbError)
+	}
+
+	w.Header().Add("Content-Type", "Application/json")
+	w.Write([]byte(nationalNewsArray))
 }

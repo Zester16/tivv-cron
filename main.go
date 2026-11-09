@@ -46,6 +46,8 @@ func main() {
 	r.HandleFunc("/v1/lm-topofmorning", controller.GetLiveMintNewsletterArray)
 	r.HandleFunc("/v1/tgam-newsletter", controller.GetGlobeAndMailNewsletters)
 	r.HandleFunc("/v1/national-newsletter", controller.GetNationalNewsletters)
+	r.HandleFunc("/v1/sausa-newsletter", controller.GetSausaNewsletters)
+	r.HandleFunc("/v1/smh-newsletter", controller.GetSmhNewsletters)
 	r.HandleFunc("/bqprime-array", controller.GetBQPrimeAllYouNeedToKnowArray)
 	r.HandleFunc("/nyt-newsletter", controller.GetCachedNYTLetter)
 	r.HandleFunc("/stock-index", controller.GetAllStocksCached)
