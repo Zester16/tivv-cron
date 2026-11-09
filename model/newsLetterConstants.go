@@ -47,7 +47,12 @@ const GLOBE_MAIL = "tgam-ns"
 /**
 * for National UAE
  */
-const NATIONAL_UAE = "ntl-emi-ns"
+const NATIONAL_UAE = "tnuae-ns"
+
+/**
+* For Stock Market Analysis
+**/
+const STOCK_MARKET_ANALYSIS = "sausa-scan-ns"
 
 /*
 * SMH
@@ -93,6 +98,8 @@ func (t *test) GetNYTUrls() map[string]string {
 	return t.nytUrls
 }
 
+//key is mapped to constants in top of page
+
 var RedisKey = map[string]string{
 	"mintTopOfMorning":      MINT_TOP_OF_MORNING,
 	"bloomberg":             BL_NS,
@@ -101,4 +108,5 @@ var RedisKey = map[string]string{
 	"the_national":          NATIONAL_UAE,
 	"NDTV Profit":           BQPRIME_TOTM,
 	"sydney_morning_herald": SMH,
+	"Stock Market Analysis": STOCK_MARKET_ANALYSIS,
 }
